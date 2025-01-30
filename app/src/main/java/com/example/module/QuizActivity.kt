@@ -1,15 +1,18 @@
 package com.example.module
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.module.databinding.ActivityQuizBinding
+import android.view.animation.AnimationUtils
 
-// Add before QuizActivity class
 data class QuizQuestion(
     val type: String,
     val correctAnswer: String,
@@ -140,14 +143,6 @@ class QuizActivity : AppCompatActivity() {
         binding.imgQuestion.setColorFilter(color)
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun updateProgressUI() {
-        val progress = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions) * 100
-        binding.progressBar.progress = progress.toInt()
-        binding.txtScore.text = "Score: ${currentProgress.correctAnswers}"
-        binding.txtStreak.text = "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
-    }
-
     private fun showResults() {
         AlertDialog.Builder(this)
             .setTitle("Quiz Complete!")
@@ -176,6 +171,48 @@ class QuizActivity : AppCompatActivity() {
 
         listOf(binding.btnOption1, binding.btnOption2, binding.btnOption3, binding.btnOption4).forEach { button ->
             button.setOnClickListener { checkAnswer(button.text.toString()) }
+        }
+    }
+
+    // Add to QuizActivity.kt
+    private var progressAnimator: ValueAnimator? = null
+
+    @SuppressLint("SetTextI18n")
+    private fun updateProgressUI() {
+        val progress = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions) * 100
+        val prevProgress = binding.progressBar.progress
+
+        // Animate progress bar
+        progressAnimator?.cancel()
+        progressAnimator = ValueAnimator.ofInt(prevProgress, progress.toInt()).apply {
+            duration = 500
+            interpolator = OvershootInterpolator()
+            addUpdateListener { animator ->
+                val value = animator.animatedValue as Int
+                binding.progressBar.progress = value
+                binding.txtProgressPercent.text = "$value%"
+
+                // Update rocket position
+                val translationX = (binding.progressBar.width * (value / 100f)) -
+                        (binding.progressIndicator.width / 2f)
+                binding.progressIndicator.translationX = translationX
+            }
+            start()
+        }
+
+        // Animate streak
+        binding.txtStreakMain.text = "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
+        binding.txtStreakProgress.text = "Streak: ${currentProgress.currentStreak}"
+
+        // Particle effect on streak increase
+        if (currentProgress.currentStreak > 0 && currentProgress.currentStreak % 5 == 0) {
+            showStreakEffect(currentProgress.currentStreak)
+        }
+    }
+
+    private fun showStreakEffect(streak: Int) {
+        val anim = AnimationUtils.loadAnimation(this, R.anim.streak_pulse).apply {
+            repeatCount = 2
         }
     }
 }

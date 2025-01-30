@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Single Root Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,24 +23,16 @@
                 android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_back"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="0dp"
-                android:layout_height="8dp"
-                android:layout_weight="5"
-                android:progress="0"/>
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/txtScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Score: 0"
-                android:textSize="16sp"
                 android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText,TextContrastCheck" />
         </LinearLayout>
 
         <!-- Question Content -->
@@ -48,7 +41,8 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription" />
 
         <!-- Answer Options -->
         <GridLayout
@@ -65,7 +59,7 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck" />
+                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
 
             <Button
                 android:id="@+id/btnOption2"
@@ -74,7 +68,7 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck" />
+                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
 
             <Button
                 android:id="@+id/btnOption3"
@@ -83,7 +77,7 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck" />
+                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
 
             <Button
                 android:id="@+id/btnOption4"
@@ -92,12 +86,12 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck" />
+                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
         </GridLayout>
 
-        <!-- Streak Display -->
+        <!-- Streak Display (Renamed ID) -->
         <TextView
-            android:id="@+id/txtStreak"
+            android:id="@+id/txtStreakMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -105,5 +99,74 @@
             android:textAlignment="center"
             tools:ignore="HardcodedText" />
 
+        <!-- Progress Container -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <!-- Animated Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:progressDrawable="@drawable/progress_bar_track"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"/>
+
+            <!-- Progress Indicator -->
+            <ImageView
+                android:id="@+id/progressIndicator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_rocket"
+                android:layout_marginStart="-16dp"
+                android:layout_alignBottom="@id/progressBar"
+                android:layout_alignTop="@id/progressBar"
+                android:translationX="0dp"
+                tools:ignore="ContentDescription" />
+
+            <!-- Progress Text -->
+            <TextView
+                android:id="@+id/txtProgressPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/progressBar"
+                android:layout_alignEnd="@id/progressBar"
+                android:text="0%"
+                android:textColor="#FF6B6B"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <!-- Streak Display (Renamed ID) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_streak"
+                android:tint="#FFA726"
+                tools:ignore="ContentDescription,UseAppTint" />
+
+            <TextView
+                android:id="@+id/txtStreakProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Streak: 0"
+                android:textColor="#666"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
     </LinearLayout>
 </layout>
