@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Top Bar with Title and Back Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/system_accent1_900"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            tools:ignore="NewApi">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_back"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:padding="8dp"
+                android:paddingStart="70dp"
+                android:text="Learn Letters"
+                android:textColor="@android:color/white"
+                android:textSize="23sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+        </LinearLayout>
+
+    <!-- ScrollView for Buttons -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Add buttons for each letter A-Z -->
+
+            <Button
+                android:id="@+id/btnA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="A"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="B"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="C"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="D"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="E"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="F"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="G"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="H"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="I"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnJ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="J"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="K"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="L"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="M"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="N"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="O"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="P"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnQ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="Q"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="R"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="S"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="T"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="U"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="V"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="W"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="X"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="Y"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+            <Button
+                android:id="@+id/btnZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/system_accent1_700"
+                android:textSize="20sp"
+                android:text="Z"
+                android:textColor="#E2D9D9"
+                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+    </layout>
