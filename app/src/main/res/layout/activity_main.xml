@@ -34,7 +34,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_letter" />
+                        android:src="@drawable/ic_letter"
+                        tools:ignore="ContentDescription" />
 
                     <Button
                         android:id="@+id/btnLetters"
@@ -44,7 +45,7 @@
                         android:backgroundTint="@android:color/system_accent1_700"
                         android:text="Learn Letters"
                         android:textColor="#E2D9D9"
-                        tools:ignore="HardcodedText,NewApi" />
+                        tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
                 </LinearLayout>
 
@@ -69,7 +70,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_number" />
+                        android:src="@drawable/ic_number"
+                        tools:ignore="ContentDescription" />
 
                     <Button
                         android:id="@+id/btnNumbers"
@@ -79,7 +81,7 @@
                         android:backgroundTint="@android:color/system_accent1_700"
                         android:text="Learn Numbers"
                         android:textColor="#E2D9D9"
-                        tools:ignore="HardcodedText,NewApi" />
+                        tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
                 </LinearLayout>
 
@@ -104,7 +106,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_word" />
+                        android:src="@drawable/ic_word"
+                        tools:ignore="ContentDescription" />
 
                     <Button
                         android:id="@+id/btnWords"
@@ -114,7 +117,7 @@
                         android:backgroundTint="@android:color/system_accent1_700"
                         android:text="Learn Words"
                         android:textColor="#E2D9D9"
-                        tools:ignore="HardcodedText,NewApi" />
+                        tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
                 </LinearLayout>
 
@@ -144,7 +147,7 @@
                         android:text="Take a Quiz"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText,TextContrastCheck" />
 
                     <!-- Quiz Description -->
                     <TextView
@@ -154,7 +157,7 @@
                         android:gravity="center"
                         android:text="Test your knowledge of letters, numbers, and words!"
                         android:textSize="14sp"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText,TextContrastCheck" />
 
                     <!-- Start Quiz Button -->
                     <Button
@@ -164,7 +167,7 @@
                         android:backgroundTint="@android:color/system_accent1_700"
                         android:text="Start Quiz"
                         android:textColor="#E2D9D9"
-                        tools:ignore="HardcodedText,NewApi" />
+                        tools:ignore="HardcodedText,NewApi,TouchTargetSizeCheck,VisualLintButtonSize" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
