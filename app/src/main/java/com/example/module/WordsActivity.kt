@@ -19,7 +19,7 @@ class WordsActivity : AppCompatActivity() {
             finish() // Navigate back to the previous screen
         }
 
-        // Word to image mapping
+        // Word to video mapping
         val wordMap = mapOf(
             binding.btnBye to Pair("Bye", "word_bye"),
             binding.btnHello to Pair("Hello", "word_hello"),
@@ -36,10 +36,13 @@ class WordsActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSign(displayText: String, imageCode: String) {
+    /**
+     * Opens SignActivity with the corresponding word's display text and video code.
+     */
+    private fun showSign(displayText: String, videoCode: String) {
         Intent(this, SignActivity::class.java).apply {
             putExtra("DISPLAY_TEXT", displayText)
-            putExtra("IMAGE_CODE", imageCode)
+            putExtra("VIDEO_CODE", videoCode) // Corrected key from "IMAGE_CODE" to "VIDEO_CODE"
             startActivity(this)
         }
     }

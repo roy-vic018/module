@@ -6,12 +6,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.module.databinding.ActivityQuizBinding
-import android.view.animation.AnimationUtils
+import java.util.Locale
 
 data class QuizQuestion(
     val type: String,
@@ -82,7 +82,7 @@ class QuizActivity : AppCompatActivity() {
         return words.map { word ->
             QuizQuestion(
                 type = "word",
-                correctAnswer = word.replace("_", " ").capitalize(),
+                correctAnswer = word.replace("_", " ").capitalize(Locale.ROOT),
                 imageResource = resources.getIdentifier("word_$word", "drawable", packageName),
                 options = generateOptions(word, words)
             )

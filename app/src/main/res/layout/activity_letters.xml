@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -7,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Top Bar with Title and Back Button -->
+        <!-- Top Bar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,12 +17,10 @@
             android:padding="16dp"
             tools:ignore="NewApi">
 
-            <!-- Back Button -->
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
                 android:src="@drawable/ic_back"
@@ -31,289 +30,504 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="start|center_vertical"
-                android:padding="8dp"
+                android:gravity="center_vertical"
                 android:paddingStart="70dp"
-                android:text="Learn Letters"
+                android:text="Learn Alphabet"
                 android:textColor="@android:color/white"
                 android:textSize="23sp"
                 tools:ignore="HardcodedText,RtlSymmetry" />
         </LinearLayout>
 
-    <!-- ScrollView for Buttons -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <!-- Letters Grid -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-            <!-- Add buttons for each letter A-Z -->
-
-            <Button
-                android:id="@+id/btnA"
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/lettersGrid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="A"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                android:padding="8dp"
+                app:columnCount="3"
+                app:rowCount="9">
 
-            <Button
-                android:id="@+id/btnB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="B"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 0 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnA"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="A"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="100dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="C"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnB"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="B"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="D"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnC"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="C"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnE"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="E"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 1 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnD"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="D"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="F"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnE"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="E"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnG"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="G"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnF"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="F"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnH"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="H"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 2 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnG"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="G"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="2"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="I"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnH"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="H"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="2"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnJ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="J"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnI"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="I"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="2"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnK"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="K"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 3 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnJ"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="J"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="3"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="L"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnK"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="K"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="3"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnM"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="M"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnL"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="L"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="3"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="N"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 4 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnM"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="M"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="4"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnO"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="O"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnN"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="N"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="4"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="P"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnO"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="O"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="4"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnQ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="Q"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 5 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnP"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="P"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="5"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnR"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="R"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQ"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="Q"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="5"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="S"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnR"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="R"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="5"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="T"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <!-- Row 6 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnS"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="S"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="6"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnU"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="U"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnT"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="T"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="6"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="V"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnU"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="U"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="6"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnW"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="W"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnV"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="V"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="7"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnX"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="X"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnW"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="W"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="7"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnY"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="Y"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnX"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="X"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="7"
+                    tools:ignore="HardcodedText,NewApi" />
 
-            <Button
-                android:id="@+id/btnZ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/system_accent1_700"
-                android:textSize="20sp"
-                android:text="Z"
-                android:textColor="#E2D9D9"
-                tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnY"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="Y"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="8"
+                    tools:ignore="HardcodedText,NewApi" />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
-    </layout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnZ"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="4dp"
+                    android:text="Z"
+                    android:textSize="35sp"
+                    android:textColor="#E2D9D9"
+                    android:backgroundTint="@android:color/system_accent1_700"
+                    android:elevation="6dp"
+                    android:stateListAnimator="@animator/button_elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:cornerRadius="20dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="8"
+                    tools:ignore="HardcodedText,NewApi" />
+
+
+            </androidx.gridlayout.widget.GridLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

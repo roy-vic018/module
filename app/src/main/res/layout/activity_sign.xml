@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@android:color/black">
 
         <!-- Top Bar with Back Button Only -->
         <FrameLayout
@@ -30,7 +32,8 @@
         <!-- Content Area -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
             android:padding="16dp">
@@ -39,19 +42,57 @@
                 android:id="@+id/txtSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="56sp"
-                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="24dp"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck"
                 tools:text="A" />
 
-            <ImageView
-                android:id="@+id/imgSign"
-                android:layout_width="300dp"
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="370dp"
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"
-                tools:src="@tools:sample/avatars"
                 tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <!-- Bottom Buttons for Front/Side View -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@android:color/system_accent1_900"
+            tools:ignore="ExtraText,NewApi">
+
+            <Button
+                android:id="@+id/btnFrontView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Front View"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_side_view"
+                android:drawablePadding="8dp"
+                android:backgroundTint="@android:color/system_accent1_700"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/btnSideView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Side View"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_side_view"
+                android:drawablePadding="8dp"
+                android:backgroundTint="@android:color/system_accent1_700"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </LinearLayout>

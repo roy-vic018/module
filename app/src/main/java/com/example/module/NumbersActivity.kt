@@ -19,7 +19,7 @@ class NumbersActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Number to image mapping
+        // Number to video mapping (0-9)
         val numberMap = mapOf(
             binding.btn1 to Pair("1", "n1"),
             binding.btn2 to Pair("2", "n2"),
@@ -30,9 +30,10 @@ class NumbersActivity : AppCompatActivity() {
             binding.btn7 to Pair("7", "n7"),
             binding.btn8 to Pair("8", "n8"),
             binding.btn9 to Pair("9", "n9"),
-            binding.btn10 to Pair("10", "n10")
+            binding.btn0 to Pair("0", "n0")
         )
 
+        // Set click listeners for all number buttons
         numberMap.forEach { (button, pair) ->
             button.setOnClickListener {
                 showSign(pair.first, pair.second)
@@ -40,10 +41,13 @@ class NumbersActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSign(displayText: String, imageCode: String) {
+    /**
+     * Opens SignActivity with the corresponding number's display text and video code.
+     */
+    private fun showSign(displayText: String, videoCode: String) {
         Intent(this, SignActivity::class.java).apply {
             putExtra("DISPLAY_TEXT", displayText)
-            putExtra("IMAGE_CODE", imageCode)
+            putExtra("VIDEO_CODE", videoCode) // Corrected key from "IMAGE_CODE" to "VIDEO_CODE"
             startActivity(this)
         }
     }
