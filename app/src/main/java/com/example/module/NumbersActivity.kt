@@ -47,7 +47,8 @@ class NumbersActivity : AppCompatActivity() {
     private fun showSign(displayText: String, videoCode: String) {
         Intent(this, SignActivity::class.java).apply {
             putExtra("DISPLAY_TEXT", displayText)
-            putExtra("VIDEO_CODE", videoCode) // Corrected key from "IMAGE_CODE" to "VIDEO_CODE"
+            putExtra("VIDEO_CODE", videoCode)
+            putExtra("CATEGORY", "numbers")
             startActivity(this)
         }
     }

@@ -62,8 +62,9 @@ class LettersActivity : AppCompatActivity() {
      */
     private fun showSign(displayText: String, videoCode: String) {
         Intent(this, SignActivity::class.java).apply {
-            putExtra("DISPLAY_TEXT", displayText)
-            putExtra("VIDEO_CODE", videoCode)
+            putExtra("DISPLAY_TEXT", displayText) // Use the provided displayText
+            putExtra("VIDEO_CODE", videoCode)    // Use the provided videoCode
+            putExtra("CATEGORY", "letters")      // Add category for swipe navigation
             startActivity(this)
         }
     }
