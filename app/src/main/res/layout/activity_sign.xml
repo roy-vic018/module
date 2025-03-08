@@ -7,7 +7,10 @@
     <FrameLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:visibility="visible"
+        android:focusableInTouchMode="true">
 
         <!-- Existing Layout -->
         <LinearLayout
@@ -33,7 +36,6 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
             </FrameLayout>
 
             <!-- Content Area -->
@@ -56,13 +58,11 @@
                     tools:ignore="TextContrastCheck"
                     tools:text="A" />
 
-                <WebView
-                    android:id="@+id/webView"
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/videoPlayer"
                     android:layout_width="370dp"
-                    android:layout_height="300dp"
-                    android:scaleType="fitCenter"
-                    tools:ignore="ContentDescription" />
-
+                    android:layout_height="400dp"
+                    android:background="@android:color/white" />
             </LinearLayout>
 
             <!-- Bottom Buttons for Front/Side View -->
@@ -100,7 +100,6 @@
                     android:drawablePadding="8dp"
                     android:backgroundTint="@android:color/system_accent1_700"
                     tools:ignore="HardcodedText" />
-
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

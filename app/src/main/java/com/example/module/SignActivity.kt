@@ -4,24 +4,32 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebViewClient
+import android.view.View
 import android.widget.Toast
+import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.Log
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.module.databinding.ActivitySignBinding
 import kotlin.math.abs
 
 class SignActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignBinding
-    private var frontViewVideoId: String = ""
-    private var sideViewVideoId: String = ""
+    private var frontViewVideoUrl: String = ""
+    private var sideViewVideoUrl: String = ""
     private lateinit var currentCategory: String
     private lateinit var currentList: List<String>
     private var currentIndex: Int = 0
     private lateinit var gestureDetector: GestureDetector
+    private var player: ExoPlayer? = null
 
-    @SuppressLint("SetJavaScriptEnabled", "ClickableViewAccessibility")
+    @OptIn(UnstableApi::class)
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignBinding.inflate(layoutInflater)
@@ -34,29 +42,35 @@ class SignActivity : AppCompatActivity() {
 
         // Initialize item list based on category
         currentList = when (currentCategory) {
-            "letters" -> listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-            "numbers" -> listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+            "letters" -> ('a'..'z').map { it.toString() }
+            "numbers" -> (1..10).map { it.toString() }
             "words" -> listOf("Bye", "Hello", "Thank You", "Yes", "No")
             else -> emptyList()
         }
 
         // Find current item index
-        currentIndex = currentList.indexOf(videoCode)
-        if (currentIndex == -1) currentIndex = 0
-
+        currentIndex = currentList.indexOf(videoCode).takeIf { it != -1 } ?: 0
         binding.txtSign.text = displayText
 
-        // Load initial videos
-        updateVideoIds(videoCode)
-        setupWebView()
-        loadVideo(frontViewVideoId)
+        // Update video URLs and initialize ExoPlayer
+        updateVideoUrls(videoCode)
+        setupExoPlayer()
 
-        // Button listeners
+        // Play the front view video by default
+        playVideo(frontViewVideoUrl)
+
+        // Set up button listeners
         binding.btnBack.setOnClickListener { finish() }
-        binding.btnFrontView.setOnClickListener { loadVideo(frontViewVideoId) }
-        binding.btnSideView.setOnClickListener { loadVideo(sideViewVideoId) }
+        binding.btnFrontView.setOnClickListener {
+            Log.d("ButtonDebug", "Front View Button Clicked. URL: $frontViewVideoUrl")
+            playVideo(frontViewVideoUrl)
+        }
+        binding.btnSideView.setOnClickListener {
+            Log.d("ButtonDebug", "Side View Button Clicked. URL: $sideViewVideoUrl")
+            playVideo(sideViewVideoUrl)
+        }
 
-        // Gesture detector setup
+        // Set up gesture detector for swipe navigation
         gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onFling(
                 e1: MotionEvent?,
@@ -110,68 +124,96 @@ class SignActivity : AppCompatActivity() {
             else -> newVideoCode
         }
         binding.txtSign.text = displayText
-        updateVideoIds(newVideoCode)
-        loadVideo(frontViewVideoId)
+
+        // Update video URLs and play the front view video
+        updateVideoUrls(newVideoCode)
+        playVideo(frontViewVideoUrl) // Play the new video
     }
 
-    private fun updateVideoIds(videoCode: String) {
-        frontViewVideoId = getVideoId(videoCode, "front")
-        sideViewVideoId = getVideoId(videoCode, "side")
+    private fun getCloudinaryUrl(videoCode: String, viewType: String): String {
+        val cloudName = "decewbra0"
+        val videoMap = mapOf(
+            "a_front" to "tjac32fkpjvhis4lmjpd",
+            "a_side" to "ivixpjsxtojwdp1np1v6",
+            "b_front" to "tjac32fkpjvhis4lmjpd",
+            "b_side" to "ivixpjsxtojwdp1np1v6",
+            "c_front" to "tjac32fkpjvhis4lmjpd",
+            "c_side" to "ivixpjsxtojwdp1np1v6"
+        )
+        val publicId = videoMap["${videoCode}_$viewType"] ?: return ""
+        return "https://res.cloudinary.com/$cloudName/video/upload/$publicId.mp4"
     }
 
-    @SuppressLint("SetJavaScriptEnabled", "ClickableViewAccessibility")
-    private fun setupWebView() {
-        binding.webView.apply {
-            webViewClient = WebViewClient()
-            webChromeClient = WebChromeClient()
-            settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                mediaPlaybackRequiresUserGesture = false
-                cacheMode = WebSettings.LOAD_NO_CACHE
+    @OptIn(UnstableApi::class)
+    private fun updateVideoUrls(videoCode: String) {
+        frontViewVideoUrl = getCloudinaryUrl(videoCode, "front")
+        sideViewVideoUrl = getCloudinaryUrl(videoCode, "side")
+
+        Log.d("VideoDebug", "Front View URL: $frontViewVideoUrl")
+        Log.d("VideoDebug", "Side View URL: $sideViewVideoUrl")
+    }
+
+    @OptIn(UnstableApi::class)
+    private fun setupExoPlayer() {
+        player = ExoPlayer.Builder(this).build()
+        binding.videoPlayer.player = player
+        binding.videoPlayer.useController = false // Hide controls for autoplay experience
+        binding.videoPlayer.visibility = View.VISIBLE
+        binding.videoPlayer.setKeepContentOnPlayerReset(true)
+
+        // Set repeat mode to loop the video indefinitely
+        player?.repeatMode = Player.REPEAT_MODE_ALL
+
+        player?.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                when (playbackState) {
+                    Player.STATE_READY -> Log.d("VideoDebug", "Video is ready to play")
+                    Player.STATE_BUFFERING -> Log.d("VideoDebug", "Buffering...")
+                    Player.STATE_ENDED -> Log.d("VideoDebug", "Video playback ended")
+                    Player.STATE_IDLE -> Log.d("VideoDebug", "Player is idle")
+                }
             }
 
-            // Allow swipes on the WebView
-            setOnTouchListener { _, event ->
-                gestureDetector.onTouchEvent(event)
-                performClick()
-                false
+            override fun onPlayerError(error: PlaybackException) {
+                Log.e("VideoDebug", "Playback error: ${error.message}")
+                Toast.makeText(this@SignActivity, "Video playback error: ${error.message}", Toast.LENGTH_LONG).show()
             }
-        }
+        })
     }
 
-    private fun loadVideo(videoId: String) {
-        if (videoId.isEmpty()) {
+    @SuppressLint("UnsafeOptInUsageError")
+    private fun playVideo(videoUrl: String) {
+        if (videoUrl.isEmpty()) {
             Toast.makeText(this, "Video not available", Toast.LENGTH_SHORT).show()
             return
         }
-        val htmlContent = """
-            <html>
-            <body style="margin:0;padding:0;overflow:hidden;">
-                <iframe src="https://drive.google.com/file/d/$videoId/preview" 
-                        width="100%" height="100%" style="border:none;" 
-                        allow="autoplay"></iframe>
-                <script>
-                    setTimeout(function() {
-                        var iframe = document.querySelector("iframe");
-                        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                    }, 1000);
-                </script>
-            </body>
-            </html>
-        """.trimIndent()
-        binding.webView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null)
+
+        Log.d("VideoDebug", "Playing Video: $videoUrl")
+
+        // Stop and clear existing MediaItem
+        player?.stop()
+        player?.clearMediaItems()
+
+        // Set a new MediaItem
+        val mediaItem = MediaItem.fromUri(videoUrl.toUri())
+        player?.setMediaItem(mediaItem)
+        player?.prepare() // Prepare the media for playback
+        player?.playWhenReady = true // Auto-play immediately
     }
 
-    private fun getVideoId(videoCode: String, viewType: String): String {
-        val videoMap = mapOf(
-            // Letters
-            "a_front" to "1l4ut1DxO-23ZFXeWdOS-vkl9241x3SOh",
-            "a_side" to "1Q6NzBPEJHro1xf31nq3xVQEJCGWpY1b_",
-            "b_front" to "1l4ut1DxO-23ZFXeWdOS-vkl9241x3SOh", // Replace with actual ID
-            "b_side" to "1Q6NzBPEJHro1xf31nq3xVQEJCGWpY1b_",   // Replace with actual ID
-            // Add more entries for all letters, numbers, and words
-        )
-        return videoMap["${videoCode}_$viewType"] ?: ""
+    override fun onStart() {
+        super.onStart()
+        player?.playWhenReady = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        player?.playWhenReady = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player?.release()
+        player = null
     }
 }

@@ -50,7 +50,12 @@ dependencies {
     implementation(libs.library)
     implementation(libs.androidx.gridlayout)
     implementation(libs.firebase.storage)
+    implementation(libs.cloudinary)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.media3.common)
+    implementation(libs.media3.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+
