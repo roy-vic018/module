@@ -15,7 +15,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Card for Learn Letters -->
+            <!-- Inside the Letters CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,11 +31,37 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_letter"
-                        tools:ignore="ContentDescription" />
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_letter"
+                            tools:ignore="ContentDescription" />
+
+                        <!-- Add this progress indicator -->
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/lettersProgress"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="top|start"
+                            app:indicatorColor="@color/green_500"
+                            app:trackColor="@color/darkBlue"
+                            app:trackThickness="6dp"
+                            app:indicatorSize="60dp" />
+
+                        <TextView
+                            android:id="@+id/tvLettersPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="25dp"
+                            android:text="0%"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+                    </FrameLayout>
 
                     <Button
                         android:id="@+id/btnLetters"
@@ -45,16 +71,14 @@
                         android:background="@drawable/btn2_bg"
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
+                        app:backgroundTint="@null"
                         android:text="Learn Alphabet"
                         android:textColor="#E2D9D9"
-                        app:backgroundTint="@null"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
-            <!-- Card for Learn Numbers -->
+            <!-- Updated Numbers CardView section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,11 +94,36 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_number"
-                        tools:ignore="ContentDescription" />
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_number"
+                            tools:ignore="ContentDescription" />
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/numbersProgress"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="top|start"
+                            app:indicatorColor="@color/green_500"
+                            app:trackColor="@color/darkBlue"
+                            app:trackThickness="6dp"
+                            app:indicatorSize="60dp" />
+
+                        <TextView
+                            android:id="@+id/tvNumbersPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="25dp"
+                            android:text="0%"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+                    </FrameLayout>
 
                     <Button
                         android:id="@+id/btnNumbers"
@@ -90,16 +139,15 @@
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
-            <!-- Card for Learn Words -->
+            <!-- Inside the Words CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardBackgroundColor="@color/material_dynamic_primary20"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
@@ -109,11 +157,37 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_word"
-                        tools:ignore="ContentDescription" />
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_letter"
+                            tools:ignore="ContentDescription" />
+
+                        <!-- Add this progress indicator -->
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/WordsProgress"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="top|start"
+                            app:indicatorColor="@color/green_500"
+                            app:trackColor="@color/darkBlue"
+                            app:trackThickness="6dp"
+                            app:indicatorSize="60dp" />
+
+                        <TextView
+                            android:id="@+id/tvWordsPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="25dp"
+                            android:text="0%"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+                    </FrameLayout>
 
                     <Button
                         android:id="@+id/btnWords"
@@ -127,9 +201,7 @@
                         android:text="Learn Words"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
             <!-- Quiz CardView -->
