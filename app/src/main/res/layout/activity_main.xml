@@ -42,9 +42,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/system_accent1_700"
-                        android:text="Learn Letters"
+                        android:background="@drawable/btn2_bg"
+                        android:fontFamily="@font/wendy_one"
+                        android:textSize="20sp"
+                        android:text="Learn Alphabet"
                         android:textColor="#E2D9D9"
+                        app:backgroundTint="@null"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
                 </LinearLayout>
@@ -78,7 +81,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/system_accent1_700"
+                        android:background="@drawable/btn2_bg"
+                        android:fontFamily="@font/wendy_one"
+                        android:textSize="20sp"
+                        app:backgroundTint="@null"
                         android:text="Learn Numbers"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
@@ -114,7 +120,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/system_accent1_700"
+                        android:background="@drawable/btn2_bg"
+                        android:fontFamily="@font/wendy_one"
+                        android:textSize="20sp"
+                        app:backgroundTint="@null"
                         android:text="Learn Words"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
@@ -164,7 +173,10 @@
                         android:id="@+id/btnStartQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/system_accent1_700"
+                        android:background="@drawable/btn2_bg"
+                        android:fontFamily="@font/wendy_one"
+                        android:textSize="20sp"
+                        app:backgroundTint="@null"
                         android:text="Start Quiz"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,TouchTargetSizeCheck,VisualLintButtonSize" />

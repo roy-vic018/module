@@ -17,13 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@android:color/black">
+            android:background="@android:color/white"
+            tools:ignore="UselessParent">
 
             <!-- Top Bar with Back Button Only -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/system_accent1_900"
+                android:background="@drawable/top_shape"
                 android:padding="12dp"
                 tools:ignore="NewApi">
 
@@ -43,16 +44,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
                 android:gravity="center"
-                android:padding="16dp">
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:textAlignment="center">
 
                 <TextView
                     android:id="@+id/txtSign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="401dp"
+                    android:layout_height="159dp"
                     android:layout_gravity="center_horizontal"
                     android:paddingBottom="24dp"
+                    android:textAlignment="center"
                     android:textSize="56sp"
                     android:textStyle="bold"
                     tools:ignore="TextContrastCheck"
@@ -62,7 +65,7 @@
                     android:id="@+id/videoPlayer"
                     android:layout_width="370dp"
                     android:layout_height="400dp"
-                    android:background="@android:color/white" />
+                    android:background="@android:color/black" />
             </LinearLayout>
 
             <!-- Bottom Buttons for Front/Side View -->
@@ -71,35 +74,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:background="@drawable/bottom_shape"
                 android:padding="16dp"
-                android:background="@android:color/system_accent1_900"
                 tools:ignore="ExtraText,NewApi">
 
                 <Button
                     android:id="@+id/btnFrontView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/afacad_medium"
+                    android:background="@drawable/btn2_bg"
+                    app:backgroundTint="@null"
+                    android:drawableLeft="@drawable/ic_front_view"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:textSize="18sp"
                     android:text="Front View"
+                    android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:drawableStart="@drawable/default_image"
-                    android:drawablePadding="8dp"
-                    android:backgroundTint="@android:color/system_accent1_700"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                 <Button
                     android:id="@+id/btnSideView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/afacad_medium"
+                    android:background="@drawable/btn2_bg"
+                    app:backgroundTint="@null"
+                    android:drawableLeft="@drawable/ic_front_view"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:textSize="18sp"
                     android:text="Side View"
+                    android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:drawableStart="@drawable/default_image"
-                    android:drawablePadding="8dp"
-                    android:backgroundTint="@android:color/system_accent1_700"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

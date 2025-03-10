@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimaryDark">#485C31</color>
+    <!-- For button of Front and Side View -->
+    <color name="btn_color">#1D5281</color>
 </resources>

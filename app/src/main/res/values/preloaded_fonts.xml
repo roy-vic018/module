@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/afacad_medium</item>
+        <item>@font/angkor</item>
+        <item>@font/arbutus</item>
+        <item>@font/bakbak_one</item>
+        <item>@font/bevan</item>
+        <item>@font/bowlby_one</item>
+        <item>@font/bungee_spice</item>
+        <item>@font/carter_one</item>
+        <item>@font/hammersmith_one</item>
+        <item>@font/lemon</item>
+        <item>@font/wendy_one</item>
+    </array>
+</resources>
