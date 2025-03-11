@@ -42,9 +42,9 @@ class SignActivity : AppCompatActivity() {
 
         // Initialize item list based on category
         currentList = when (currentCategory) {
-            "letters" -> ('a'..'z').map { it.toString() }
-            "numbers" -> (1..10).map { it.toString() }
-            "words" -> listOf("Bye", "Hello", "Thank You", "Yes", "No")
+            "letters" -> ('a'..'z').map { "l$it" }
+            "numbers" -> (0..9).map { "n$it" }
+            "words" -> listOf("w_bye", "w_hello", "w_thank_you", "w_yes", "w_no")
             else -> emptyList()
         }
 
@@ -118,9 +118,14 @@ class SignActivity : AppCompatActivity() {
     private fun updateDisplay() {
         val newVideoCode = currentList[currentIndex]
         val displayText = when (currentCategory) {
-            "letters" -> newVideoCode.uppercase()
-            "numbers" -> newVideoCode
-            "words" -> newVideoCode.replaceFirstChar { it.uppercase() }
+            "letters" -> newVideoCode.substring(1).uppercase()
+            "numbers" -> newVideoCode.substring(1)
+            "words" -> newVideoCode.substring(2)
+                .replace("_", " ")
+                .split(" ")
+                .joinToString(" ") { word ->
+                    word.replaceFirstChar { it.uppercase() }
+                }
             else -> newVideoCode
         }
         binding.txtSign.text = displayText
@@ -128,17 +133,29 @@ class SignActivity : AppCompatActivity() {
         // Update video URLs and play the front view video
         updateVideoUrls(newVideoCode)
         playVideo(frontViewVideoUrl) // Play the new video
+
+        // Track progress for the current item
+        trackProgress(displayText)
+    }
+
+    private fun trackProgress(displayText: String) {
+        val key = "${currentCategory}_completed"
+        val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+        val completed = prefs.getStringSet(key, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        if (completed.add(displayText)) {
+            prefs.edit().putStringSet(key, completed).apply()
+        }
     }
 
     private fun getCloudinaryUrl(videoCode: String, viewType: String): String {
         val cloudName = "decewbra0"
         val videoMap = mapOf(
-            "a_front" to "tjac32fkpjvhis4lmjpd",
-            "a_side" to "ivixpjsxtojwdp1np1v6",
-            "b_front" to "tjac32fkpjvhis4lmjpd",
-            "b_side" to "ivixpjsxtojwdp1np1v6",
-            "c_front" to "tjac32fkpjvhis4lmjpd",
-            "c_side" to "ivixpjsxtojwdp1np1v6"
+            "la_front" to "tjac32fkpjvhis4lmjpd",
+            "la_side" to "ivixpjsxtojwdp1np1v6",
+            "lb_front" to "tjac32fkpjvhis4lmjpd",
+            "lb_side" to "ivixpjsxtojwdp1np1v6",
+            "lc_front" to "tjac32fkpjvhis4lmjpd",
+            "lc_side" to "ivixpjsxtojwdp1np1v6"
         )
         val publicId = videoMap["${videoCode}_$viewType"] ?: return ""
         return "https://res.cloudinary.com/$cloudName/video/upload/$publicId.mp4"

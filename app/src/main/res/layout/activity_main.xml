@@ -49,7 +49,7 @@
                             android:layout_gravity="top|start"
                             app:indicatorColor="@color/green_500"
                             app:trackColor="@color/darkBlue"
-                            app:trackThickness="6dp"
+                            app:trackThickness="8dp"
                             app:indicatorSize="60dp" />
 
                         <TextView
@@ -58,6 +58,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="top|start"
                             android:layout_margin="25dp"
+                            android:fontFamily="@font/bakbak_one"
                             android:text="0%"
                             android:textColor="@color/white"
                             android:textSize="14sp"/>
@@ -111,7 +112,7 @@
                             android:layout_gravity="top|start"
                             app:indicatorColor="@color/green_500"
                             app:trackColor="@color/darkBlue"
-                            app:trackThickness="6dp"
+                            app:trackThickness="8dp"
                             app:indicatorSize="60dp" />
 
                         <TextView
@@ -120,6 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="top|start"
                             android:layout_margin="25dp"
+                            android:fontFamily="@font/bakbak_one"
                             android:text="0%"
                             android:textColor="@color/white"
                             android:textSize="14sp"/>
@@ -169,13 +171,13 @@
 
                         <!-- Add this progress indicator -->
                         <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/WordsProgress"
+                            android:id="@+id/wordsProgress"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_gravity="top|start"
                             app:indicatorColor="@color/green_500"
                             app:trackColor="@color/darkBlue"
-                            app:trackThickness="6dp"
+                            app:trackThickness="8dp"
                             app:indicatorSize="60dp" />
 
                         <TextView
@@ -184,9 +186,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="top|start"
                             android:layout_margin="25dp"
+                            android:fontFamily="@font/bakbak_one"
                             android:text="0%"
                             android:textColor="@color/white"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
                     </FrameLayout>
 
                     <Button

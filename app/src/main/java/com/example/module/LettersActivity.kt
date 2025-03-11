@@ -21,32 +21,32 @@ class LettersActivity : AppCompatActivity() {
 
         // Full letter-to-video mapping (A-Z)
         val letterMap = mapOf(
-            binding.btnA to Pair("A", "a"),
-            binding.btnB to Pair("B", "b"),
-            binding.btnC to Pair("C", "c"),
-            binding.btnD to Pair("D", "d"),
-            binding.btnE to Pair("E", "e"),
-            binding.btnF to Pair("F", "f"),
-            binding.btnG to Pair("G", "g"),
-            binding.btnH to Pair("H", "h"),
-            binding.btnI to Pair("I", "i"),
-            binding.btnJ to Pair("J", "j"),
-            binding.btnK to Pair("K", "k"),
-            binding.btnL to Pair("L", "l"),
-            binding.btnM to Pair("M", "m"),
-            binding.btnN to Pair("N", "n"),
-            binding.btnO to Pair("O", "o"),
-            binding.btnP to Pair("P", "p"),
-            binding.btnQ to Pair("Q", "q"),
-            binding.btnR to Pair("R", "r"),
-            binding.btnS to Pair("S", "s"),
-            binding.btnT to Pair("T", "t"),
-            binding.btnU to Pair("U", "u"),
-            binding.btnV to Pair("V", "v"),
-            binding.btnW to Pair("W", "w"),
-            binding.btnX to Pair("X", "x"),
-            binding.btnY to Pair("Y", "y"),
-            binding.btnZ to Pair("Z", "z")
+            binding.btnA to Pair("A", "la"),
+            binding.btnB to Pair("B", "lb"),
+            binding.btnC to Pair("C", "lc"),
+            binding.btnD to Pair("D", "ld"),
+            binding.btnE to Pair("E", "le"),
+            binding.btnF to Pair("F", "lf"),
+            binding.btnG to Pair("G", "lg"),
+            binding.btnH to Pair("H", "lh"),
+            binding.btnI to Pair("I", "li"),
+            binding.btnJ to Pair("J", "lj"),
+            binding.btnK to Pair("K", "lk"),
+            binding.btnL to Pair("L", "ll"),
+            binding.btnM to Pair("M", "lm"),
+            binding.btnN to Pair("N", "ln"),
+            binding.btnO to Pair("O", "lo"),
+            binding.btnP to Pair("P", "lp"),
+            binding.btnQ to Pair("Q", "lq"),
+            binding.btnR to Pair("R", "lr"),
+            binding.btnS to Pair("S", "ls"),
+            binding.btnT to Pair("T", "lt"),
+            binding.btnU to Pair("U", "lu"),
+            binding.btnV to Pair("V", "lv"),
+            binding.btnW to Pair("W", "lw"),
+            binding.btnX to Pair("X", "lx"),
+            binding.btnY to Pair("Y", "ly"),
+            binding.btnZ to Pair("Z", "lz")
         )
 
         // Set click listeners for all letter buttons
@@ -61,6 +61,14 @@ class LettersActivity : AppCompatActivity() {
      * Opens SignActivity with the corresponding letter's display text and video code.
      */
     private fun showSign(displayText: String, videoCode: String) {
+        // Track progress in SharedPreferences
+        val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+        val completed = prefs.getStringSet("letters_completed", mutableSetOf())?.toMutableSet()
+            ?: mutableSetOf()
+        if (completed.add(displayText)) {
+            prefs.edit().putStringSet("letters_completed", completed).apply()
+        }
+
         Intent(this, SignActivity::class.java).apply {
             putExtra("DISPLAY_TEXT", displayText) // Use the provided displayText
             putExtra("VIDEO_CODE", videoCode)    // Use the provided videoCode
