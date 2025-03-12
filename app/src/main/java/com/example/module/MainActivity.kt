@@ -17,14 +17,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up click listener for the Letters CardView
         binding.btnLetters.setOnClickListener {
             startActivity(Intent(this, LettersActivity::class.java))
         }
 
+        // Set up click listener for the Numbers CardView
         binding.btnNumbers.setOnClickListener {
             startActivity(Intent(this, NumbersActivity::class.java))
         }
 
+        // Set up click listener for the Words CardView
         binding.btnWords.setOnClickListener {
             startActivity(Intent(this, WordsActivity::class.java))
         }

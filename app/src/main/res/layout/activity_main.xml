@@ -15,70 +15,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Inside the Letters CardView -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/material_dynamic_primary20"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gradient"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/ic_letter"
-                            tools:ignore="ContentDescription" />
-
-                        <!-- Add this progress indicator -->
-                        <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/lettersProgress"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="top|start"
-                            app:indicatorColor="@color/green_500"
-                            app:trackColor="@color/darkBlue"
-                            app:trackThickness="8dp"
-                            app:indicatorSize="60dp" />
-
-                        <TextView
-                            android:id="@+id/tvLettersPercent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top|start"
-                            android:layout_margin="25dp"
-                            android:fontFamily="@font/bakbak_one"
-                            android:text="0%"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"/>
-                    </FrameLayout>
-
-                    <Button
-                        android:id="@+id/btnLetters"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/btn2_bg"
-                        android:fontFamily="@font/wendy_one"
-                        android:textSize="20sp"
-                        app:backgroundTint="@null"
-                        android:text="Learn Alphabet"
-                        android:textColor="#E2D9D9"
-                        tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
             <!-- Updated Numbers CardView section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -140,6 +76,70 @@
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Inside the Letters CardView -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/material_dynamic_primary20"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_letter"
+                            tools:ignore="ContentDescription" />
+
+                        <!-- Add this progress indicator -->
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/lettersProgress"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="top|start"
+                            app:indicatorColor="@color/green_500"
+                            app:trackColor="@color/darkBlue"
+                            app:trackThickness="8dp"
+                            app:indicatorSize="60dp" />
+
+                        <TextView
+                            android:id="@+id/tvLettersPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="25dp"
+                            android:fontFamily="@font/bakbak_one"
+                            android:text="0%"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+                    </FrameLayout>
+
+                    <Button
+                        android:id="@+id/btnLetters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/btn2_bg"
+                        android:fontFamily="@font/wendy_one"
+                        android:textSize="20sp"
+                        app:backgroundTint="@null"
+                        android:text="Learn Alphabet"
+                        android:textColor="#E2D9D9"
+                        tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

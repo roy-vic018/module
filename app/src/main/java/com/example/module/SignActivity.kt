@@ -150,12 +150,30 @@ class SignActivity : AppCompatActivity() {
     private fun getCloudinaryUrl(videoCode: String, viewType: String): String {
         val cloudName = "decewbra0"
         val videoMap = mapOf(
+            //Number's mapping
+            "n0_front" to "n0_front_t8hyuj",
+            "n0_side" to "n0_side_qrkm8r",
+            "n1_front" to "n1_front_ugvwss",
+            "n1_side" to "n1_side_zay8ip",
+            "n2_front" to "n2_front_l5nezn",
+            "n2_side" to "n2_front_l5nezn",
+            "n3_front" to "n3_front_dc6wuq",
+            "n3_side" to "n3_side_psknm1",
+            "n4_front" to "n4_front_hmypt4",
+            "n4_side" to "n4_side_zse7nv",
+            "n5_front" to "n5_front_xprh2d",
+            "n5_side" to "n5_side_kd32jo",
+            "n6_front" to "n6_front_s6lvbn",
+            "n6_side" to "n6_side_wiyn3t",
+            "n7_front" to "n7_front_tbs3z4",
+            "n7_side" to "n7_side_m8xneo",
+            "n8_front" to "n8_front_oitlxs",
+            "n8_side" to "n8_side_i7yjnd",
+            "n9_front" to "n9_front_bmvirh",
+            "n9_side" to "n9_side_edexse",
+            //Letter's mapping
             "la_front" to "tjac32fkpjvhis4lmjpd",
             "la_side" to "ivixpjsxtojwdp1np1v6",
-            "lb_front" to "tjac32fkpjvhis4lmjpd",
-            "lb_side" to "ivixpjsxtojwdp1np1v6",
-            "lc_front" to "tjac32fkpjvhis4lmjpd",
-            "lc_side" to "ivixpjsxtojwdp1np1v6"
         )
         val publicId = videoMap["${videoCode}_$viewType"] ?: return ""
         return "https://res.cloudinary.com/$cloudName/video/upload/$publicId.mp4"
@@ -216,6 +234,7 @@ class SignActivity : AppCompatActivity() {
         player?.setMediaItem(mediaItem)
         player?.prepare() // Prepare the media for playback
         player?.playWhenReady = true // Auto-play immediately
+        player?.setPlaybackSpeed(1.5f) // Set speed to 1.5x
     }
 
     override fun onStart() {
