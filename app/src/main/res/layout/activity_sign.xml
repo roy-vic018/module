@@ -21,7 +21,7 @@
             tools:ignore="UselessParent">
 
             <!-- Top Bar with Back Button Only -->
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/top_shape"
@@ -37,7 +37,22 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-            </FrameLayout>
+
+                <TextView
+                    android:id="@+id/txtSignTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:gravity="center_vertical"
+                    android:paddingStart="38dp"
+                    android:paddingTop="1.8dp"
+                    android:text="@string/sign_title_alphabet"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+
+            </LinearLayout>
 
             <!-- Content Area -->
             <LinearLayout
@@ -85,7 +100,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/afacad_medium"
-                    android:background="@drawable/btn2_bg"
+                    android:background="@drawable/btn2_bg_ripple"
                     app:backgroundTint="@null"
                     android:drawableLeft="@drawable/ic_front_view"
                     android:paddingStart="30dp"
@@ -103,7 +118,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/afacad_medium"
-                    android:background="@drawable/btn2_bg"
+                    android:background="@drawable/btn2_bg_ripple"
                     app:backgroundTint="@null"
                     android:drawableLeft="@drawable/ic_front_view"
                     android:paddingStart="30dp"

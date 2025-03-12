@@ -1,6 +1,7 @@
 package com.example.module
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -16,6 +17,7 @@ import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.module.databinding.ActivitySignBinding
+import java.io.File
 import kotlin.math.abs
 
 class SignActivity : AppCompatActivity() {
@@ -25,6 +27,8 @@ class SignActivity : AppCompatActivity() {
     private lateinit var currentCategory: String
     private lateinit var currentList: List<String>
     private var currentIndex: Int = 0
+    // New variable to store the current video code for naming local files
+    private var currentVideoCode: String = ""
     private lateinit var gestureDetector: GestureDetector
     private var player: ExoPlayer? = null
 
@@ -39,6 +43,17 @@ class SignActivity : AppCompatActivity() {
         val displayText = intent.getStringExtra("DISPLAY_TEXT") ?: ""
         val videoCode = intent.getStringExtra("VIDEO_CODE") ?: ""
         currentCategory = intent.getStringExtra("CATEGORY") ?: "letters"
+
+        // Set the current video code
+        currentVideoCode = videoCode
+
+        // Set the title dynamically based on category
+        binding.txtSignTitle.text = when (currentCategory) {
+            "letters" -> getString(R.string.sign_title_alphabet) // "Learn Alphabet"
+            "numbers" -> getString(R.string.sign_title_numbers)  // "Learn Numbers"
+            "words" -> getString(R.string.sign_title_words)      // "Learn Words"
+            else -> getString(R.string.sign_title_alphabet)
+        }
 
         // Initialize item list based on category
         currentList = when (currentCategory) {
@@ -57,17 +72,17 @@ class SignActivity : AppCompatActivity() {
         setupExoPlayer()
 
         // Play the front view video by default
-        playVideo(frontViewVideoUrl)
+        playVideo(frontViewVideoUrl, "front")
 
         // Set up button listeners
         binding.btnBack.setOnClickListener { finish() }
         binding.btnFrontView.setOnClickListener {
             Log.d("ButtonDebug", "Front View Button Clicked. URL: $frontViewVideoUrl")
-            playVideo(frontViewVideoUrl)
+            playVideo(frontViewVideoUrl, "front")
         }
         binding.btnSideView.setOnClickListener {
             Log.d("ButtonDebug", "Side View Button Clicked. URL: $sideViewVideoUrl")
-            playVideo(sideViewVideoUrl)
+            playVideo(sideViewVideoUrl, "side")
         }
 
         // Set up gesture detector for swipe navigation
@@ -130,9 +145,10 @@ class SignActivity : AppCompatActivity() {
         }
         binding.txtSign.text = displayText
 
-        // Update video URLs and play the front view video
+        // Update the current video code and video URLs, then play the front view video
+        currentVideoCode = newVideoCode
         updateVideoUrls(newVideoCode)
-        playVideo(frontViewVideoUrl) // Play the new video
+        playVideo(frontViewVideoUrl, "front") // Play the new video
 
         // Track progress for the current item
         trackProgress(displayText)
@@ -147,43 +163,11 @@ class SignActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCloudinaryUrl(videoCode: String, viewType: String): String {
-        val cloudName = "decewbra0"
-        val videoMap = mapOf(
-            //Number's mapping
-            "n0_front" to "n0_front_t8hyuj",
-            "n0_side" to "n0_side_qrkm8r",
-            "n1_front" to "n1_front_ugvwss",
-            "n1_side" to "n1_side_zay8ip",
-            "n2_front" to "n2_front_l5nezn",
-            "n2_side" to "n2_front_l5nezn",
-            "n3_front" to "n3_front_dc6wuq",
-            "n3_side" to "n3_side_psknm1",
-            "n4_front" to "n4_front_hmypt4",
-            "n4_side" to "n4_side_zse7nv",
-            "n5_front" to "n5_front_xprh2d",
-            "n5_side" to "n5_side_kd32jo",
-            "n6_front" to "n6_front_s6lvbn",
-            "n6_side" to "n6_side_wiyn3t",
-            "n7_front" to "n7_front_tbs3z4",
-            "n7_side" to "n7_side_m8xneo",
-            "n8_front" to "n8_front_oitlxs",
-            "n8_side" to "n8_side_i7yjnd",
-            "n9_front" to "n9_front_bmvirh",
-            "n9_side" to "n9_side_edexse",
-            //Letter's mapping
-            "la_front" to "tjac32fkpjvhis4lmjpd",
-            "la_side" to "ivixpjsxtojwdp1np1v6",
-        )
-        val publicId = videoMap["${videoCode}_$viewType"] ?: return ""
-        return "https://res.cloudinary.com/$cloudName/video/upload/$publicId.mp4"
-    }
-
+    // Updated to use VideoRepository
     @OptIn(UnstableApi::class)
     private fun updateVideoUrls(videoCode: String) {
-        frontViewVideoUrl = getCloudinaryUrl(videoCode, "front")
-        sideViewVideoUrl = getCloudinaryUrl(videoCode, "side")
-
+        frontViewVideoUrl = VideoRepository.getCloudinaryUrl(videoCode, "front")
+        sideViewVideoUrl = VideoRepository.getCloudinaryUrl(videoCode, "side")
         Log.d("VideoDebug", "Front View URL: $frontViewVideoUrl")
         Log.d("VideoDebug", "Side View URL: $sideViewVideoUrl")
     }
@@ -217,24 +201,36 @@ class SignActivity : AppCompatActivity() {
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    private fun playVideo(videoUrl: String) {
-        if (videoUrl.isEmpty()) {
-            Toast.makeText(this, "Video not available", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        Log.d("VideoDebug", "Playing Video: $videoUrl")
+    private fun playVideo(onlineUrl: String, viewType: String) {
+        // Check if a local file exists
+        val uri = getLocalVideoUri(currentVideoCode, viewType, onlineUrl)
+        Log.d("VideoDebug", "Playing Video: $uri")
 
         // Stop and clear existing MediaItem
         player?.stop()
         player?.clearMediaItems()
 
         // Set a new MediaItem
-        val mediaItem = MediaItem.fromUri(videoUrl.toUri())
+        val mediaItem = MediaItem.fromUri(uri)
         player?.setMediaItem(mediaItem)
         player?.prepare() // Prepare the media for playback
         player?.playWhenReady = true // Auto-play immediately
         player?.setPlaybackSpeed(1.5f) // Set speed to 1.5x
+    }
+
+    /**
+     * Helper to determine the local URI for a video.
+     * Files are expected in a "videos" folder named as "<videoCode>_<viewType>.mp4".
+     */
+    private fun getLocalVideoUri(videoCode: String, viewType: String, onlineUrl: String): Uri {
+        val videosDir = File(getExternalFilesDir(null), "videos")
+        val fileName = "${videoCode}_${viewType}.mp4"
+        val localFile = File(videosDir, fileName)
+        return if (localFile.exists()) {
+            Uri.fromFile(localFile)
+        } else {
+            onlineUrl.toUri()
+        }
     }
 
     override fun onStart() {

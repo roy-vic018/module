@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">module</string>
     <string name="a">A</string>
+    <string name="sign_title_alphabet">Learn Alphabet</string>
+    <string name="sign_title_numbers">Learn Numbers</string>
+    <string name="sign_title_words">Learn Words</string>
 </resources>

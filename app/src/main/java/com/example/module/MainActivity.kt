@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.module.databinding.ActivityMainBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
@@ -36,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnStartQuiz.setOnClickListener {
             startActivity(Intent(this, QuizActivity::class.java))
         }
+
+        // Trigger the bulk video download using WorkManager
+        val bulkDownloadWorkRequest = OneTimeWorkRequestBuilder<BulkDownloadWorker>().build()
+        WorkManager.getInstance(this).enqueue(bulkDownloadWorkRequest)
+
         updateProgress()
     }
 

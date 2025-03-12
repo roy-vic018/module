@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/btn2_bg"
+                        android:background="@drawable/btn2_bg_ripple"
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
@@ -133,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/btn2_bg"
+                        android:background="@drawable/btn2_bg_ripple"
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
@@ -166,7 +166,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
-                            android:src="@drawable/ic_letter"
+                            android:src="@drawable/ic_word"
                             tools:ignore="ContentDescription" />
 
                         <!-- Add this progress indicator -->
@@ -197,7 +197,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/btn2_bg"
+                        android:background="@drawable/btn2_bg_ripple"
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
@@ -248,7 +248,7 @@
                         android:id="@+id/btnStartQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/btn2_bg"
+                        android:background="@drawable/btn2_bg_ripple"
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
