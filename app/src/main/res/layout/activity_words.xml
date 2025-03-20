@@ -36,9 +36,9 @@
                 android:fontFamily="@font/baloo_chettan"
                 android:gravity="center_vertical"
                 android:layout_gravity="center"
-                android:paddingStart="58dp"
+                android:paddingStart="5dp"
                 android:paddingTop="1.8dp"
-                android:text="Learn Words"
+                android:text="Learn Words Category"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 tools:ignore="HardcodedText,RtlSymmetry" />
@@ -68,57 +68,82 @@
                 app:backgroundTint="@null"
                 tools:ignore="HardcodedText,NewApi" />
 
-            <!-- Repeat for other words -->
             <Button
-                android:id="@+id/btnHello"
+                android:id="@+id/btnGreetings"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_bg_ripple"
                 android:fontFamily="@font/bakbak_one"
-                app:backgroundTint="@null"
-                android:text="Hello"
-                android:textSize="25sp"
+                android:text="Greetings"
                 android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
                 tools:ignore="HardcodedText,NewApi" />
 
             <Button
-                android:id="@+id/btnThankYou"
+                android:id="@+id/btnEmotions"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_bg_ripple"
                 android:fontFamily="@font/bakbak_one"
-                app:backgroundTint="@null"
-                android:text="Thank You"
-                android:textSize="25sp"
+                android:text="Emotions"
                 android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
                 tools:ignore="HardcodedText,NewApi" />
 
             <Button
-                android:id="@+id/btnYes"
+                android:id="@+id/btnFamily"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_bg_ripple"
                 android:fontFamily="@font/bakbak_one"
-                app:backgroundTint="@null"
-                android:text="Yes"
-                android:textSize="25sp"
+                android:text="Family"
                 android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
                 tools:ignore="HardcodedText,NewApi" />
 
             <Button
-                android:id="@+id/btnNo"
+                android:id="@+id/btnTransportation"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_bg_ripple"
                 android:fontFamily="@font/bakbak_one"
-                app:backgroundTint="@null"
-                android:text="No"
-                android:textSize="25sp"
+                android:text="Transporation"
                 android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,NewApi" />
+
+            <Button
+                android:id="@+id/btnFood"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/btn_bg_ripple"
+                android:fontFamily="@font/bakbak_one"
+                android:text="Food"
+                android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,NewApi" />
+
+            <Button
+                android:id="@+id/btnDailyActivities"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/btn_bg_ripple"
+                android:fontFamily="@font/bakbak_one"
+                android:text="Daily Activities"
+                android:textColor="#E2D9D9"
+                android:textSize="25sp"
+                app:backgroundTint="@null"
                 tools:ignore="HardcodedText,NewApi" />
 
         </LinearLayout>

@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Module"
         tools:targetApi="31">
         <activity
-            android:name=".QuizActivity"
+            android:name=".NumbersQuizActivity"
             android:exported="false" />
         <activity
             android:name=".SignActivity"

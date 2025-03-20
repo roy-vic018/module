@@ -2,6 +2,9 @@ package com.example.module
 
 object VideoRepository {
     private const val cloudName = "decewbra0"
+    /*TODO
+    private const val cloudName1 = ""
+     */
 
     // Mapping for numbers, letters, and words
     val videoMap: Map<String, String> = mapOf(
@@ -35,5 +38,6 @@ object VideoRepository {
         val key = "${videoCode}_$viewType"
         val publicId = videoMap[key] ?: return ""
         return "https://res.cloudinary.com/$cloudName/video/upload/$publicId.mp4"
+        //*TODO "https://res.cloudinary.com/$cloudName1/video/upload/$publicId.mp4"/
     }
 }

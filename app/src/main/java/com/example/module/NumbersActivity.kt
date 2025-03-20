@@ -19,6 +19,9 @@ class NumbersActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
+        // Update quiz card based on progress (it may be locked or unlocked)
+        updateQuizCard()
+
         // Number to video mapping (0-9)
         val numberMap = mapOf(
             binding.btn0 to Pair("0", "n0"),
@@ -41,6 +44,12 @@ class NumbersActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh the quiz card state every time the activity resumes.
+        updateQuizCard()
+    }
+
     /**
      * Opens SignActivity with the corresponding number's display text and video code.
      */
@@ -58,6 +67,33 @@ class NumbersActivity : AppCompatActivity() {
             putExtra("VIDEO_CODE", videoCode)
             putExtra("CATEGORY", "numbers")
             startActivity(this)
+        }
+    }
+
+    /**
+     * Updates the quiz CardView based on progress.
+     * If the user has completed all 10 numbers, the quiz becomes unlocked.
+     */
+    private fun updateQuizCard() {
+        val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+        val numbersCompletedCount = prefs.getStringSet("numbers_completed", emptySet())?.size ?: 0
+
+        if (numbersCompletedCount < 10) {
+            // Module not complete; lock the quiz.
+            binding.cardQuiz.isClickable = false
+            binding.txtQuizLabel.text = "Quiz Locked"
+            binding.imgQuizIcon.setImageResource(R.drawable.ic_locked) // REPLACE THE ICON WITH THE LOCKED ONE
+            binding.cardQuiz.setOnClickListener(null)
+        } else {
+            // Module complete; unlock quiz.
+            binding.cardQuiz.isClickable = true
+            binding.txtQuizLabel.text = "Take Numbers Quiz"
+            binding.imgQuizIcon.setImageResource(R.drawable.unlocked) // REPLACE THE ICON WITH THE UNLOCKED ONE
+            binding.cardQuiz.setOnClickListener {
+                val intent = Intent(this, NumbersQuizActivity::class.java)
+                intent.putExtra("quizType", "number")
+                startActivity(intent)
+            }
         }
     }
 }

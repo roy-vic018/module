@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Top Bar with Title and Back Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/top_shape"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            tools:ignore="NewApi">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_back"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/txtCategoryTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/baloo_chettan"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:paddingStart="58dp"
+                android:paddingTop="1.8dp"
+                android:text="Emotions"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Add buttons for each word -->
+                <Button
+                    android:id="@+id/btnSad"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Sad"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <Button
+                    android:id="@+id/btnHappy"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Happy"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <Button
+                    android:id="@+id/btnAngry"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Angry"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

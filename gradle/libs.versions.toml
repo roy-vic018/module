@@ -1,6 +1,6 @@
 [versions]
-agp = "8.8.0"
-kotlin = "1.9.24"
+agp = "8.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.10.0"
@@ -15,6 +15,7 @@ webkit = "1.12.1"
 media3Exoplayer = "1.5.1"
 media3 = "1.2.0"
 workRuntimeKtx = "2.10.0"
+konfetti = "2.0.5"
 
 
 [libraries]
@@ -35,6 +36,8 @@ androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplaye
 media3-common = { module = "androidx.media3:media3-common", version.ref = "media3" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+konfetti-xml = { module = "nl.dionsegijn:konfetti-xml", version.ref = "konfetti" }
 
 
 [plugins]

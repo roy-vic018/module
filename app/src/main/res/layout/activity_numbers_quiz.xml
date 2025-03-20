@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Single Root Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,34 +14,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="10dp"
             android:gravity="center_vertical">
 
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+                android:background="@drawable/ic_back"
+                android:src="@drawable/ic_back2"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/txtScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/afacad_medium"
                 android:text="Score: 0"
-                android:textColor="#E2D9D9"
-                android:textSize="16sp"
+                android:textColor="#1D1515"
+                android:textSize="22sp"
                 tools:ignore="HardcodedText,TextContrastCheck" />
         </LinearLayout>
 
-        <!-- Question Content -->
-        <ImageView
-            android:id="@+id/imgQuestion"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+        <!-- Question Content: Video Player with Timer Overlay -->
+        <FrameLayout
+            android:layout_width="234dp"
+            android:layout_height="332dp"
             android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            tools:ignore="ContentDescription" />
+            android:background="@android:color/black">
+
+            <androidx.media3.ui.PlayerView
+                android:id="@+id/videoQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:use_controller="false"
+                tools:ignore="MissingConstraints" >
+
+                <TextView
+                    android:id="@+id/txtTimer"
+                    android:layout_width="93dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="top|start"
+                    android:layout_margin="8dp"
+                    android:fontFamily="@font/afacad_medium"
+                    android:padding="4dp"
+                    android:paddingStart="30dp"
+                    android:text="22"
+                    android:textColor="#1A1212"
+                    android:textSize="25sp" />
+            </androidx.media3.ui.PlayerView>
+
+            <nl.dionsegijn.konfetti.xml.KonfettiView
+                android:id="@+id/konfettiView"
+                android:layout_width="match_parent"
+                android:layout_height="332dp"
+                tools:ignore="MissingClass" />
+
+            <!-- Timer Overlay at Top Right -->
+        </FrameLayout>
 
         <!-- Answer Options -->
         <GridLayout
@@ -58,8 +87,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
+                android:background="@drawable/btn2_bg_ripple"
+                android:fontFamily="@font/afacad_medium"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="Option 1"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,RtlHardcoded" />
 
             <Button
                 android:id="@+id/btnOption2"
@@ -67,8 +104,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
+                android:background="@drawable/btn2_bg_ripple"
+                android:fontFamily="@font/afacad_medium"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="Option 2"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,RtlHardcoded" />
 
             <Button
                 android:id="@+id/btnOption3"
@@ -76,8 +121,16 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
+                android:background="@drawable/btn2_bg_ripple"
+                android:fontFamily="@font/afacad_medium"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="Option 3"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,RtlHardcoded" />
 
             <Button
                 android:id="@+id/btnOption4"
@@ -85,18 +138,27 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:backgroundTint="@android:color/system_accent1_700"
-                tools:ignore="NewApi,SpeakableTextPresentCheck,VisualLintButtonSize" />
+                android:background="@drawable/btn2_bg_ripple"
+                android:fontFamily="@font/afacad_medium"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="Option 4"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:backgroundTint="@null"
+                tools:ignore="HardcodedText,RtlHardcoded" />
         </GridLayout>
 
-        <!-- Streak Display (Renamed ID) -->
         <TextView
             android:id="@+id/txtStreakMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/afacad_medium"
             android:text="Current Streak: 0\nBest Streak: 0"
             android:textAlignment="center"
+            android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
         <!-- Progress Container -->
@@ -114,7 +176,7 @@
                 android:progressDrawable="@drawable/progress_bar_track"
                 android:indeterminate="false"
                 android:max="100"
-                android:progress="0"/>
+                android:progress="0" />
 
             <!-- Progress Indicator -->
             <ImageView
@@ -141,32 +203,5 @@
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
-
-        <!-- Streak Display (Renamed ID) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_streak"
-                android:tint="#FFA726"
-                tools:ignore="ContentDescription,UseAppTint" />
-
-            <TextView
-                android:id="@+id/txtStreakProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Streak: 0"
-                android:textColor="#666"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
     </LinearLayout>
 </layout>

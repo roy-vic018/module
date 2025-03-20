@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set up click listener for the Quiz CardView
         binding.btnStartQuiz.setOnClickListener {
-            startActivity(Intent(this, QuizActivity::class.java))
+            startActivity(Intent(this, NumbersQuizActivity::class.java))
         }
 
         // Trigger the bulk video download using WorkManager

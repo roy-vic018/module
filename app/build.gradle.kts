@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.media3.common)
     implementation(libs.media3.ui)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.konfetti.xml)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
