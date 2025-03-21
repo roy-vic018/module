@@ -82,13 +82,13 @@ class NumbersActivity : AppCompatActivity() {
             // Module not complete; lock the quiz.
             binding.cardQuiz.isClickable = false
             binding.txtQuizLabel.text = "Quiz Locked"
-            binding.imgQuizIcon.setImageResource(R.drawable.ic_locked) // REPLACE THE ICON WITH THE LOCKED ONE
+            binding.imgQuizIcon.setImageResource(R.drawable.ic_locked)
             binding.cardQuiz.setOnClickListener(null)
         } else {
             // Module complete; unlock quiz.
             binding.cardQuiz.isClickable = true
             binding.txtQuizLabel.text = "Take Numbers Quiz"
-            binding.imgQuizIcon.setImageResource(R.drawable.unlocked) // REPLACE THE ICON WITH THE UNLOCKED ONE
+            binding.imgQuizIcon.setImageResource(R.drawable.ic_unlocked)
             binding.cardQuiz.setOnClickListener {
                 val intent = Intent(this, NumbersQuizActivity::class.java)
                 intent.putExtra("quizType", "number")

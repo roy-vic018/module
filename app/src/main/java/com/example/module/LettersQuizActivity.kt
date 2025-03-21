@@ -16,7 +16,7 @@ import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.module.databinding.ActivityNumbersQuizBinding
+import com.example.module.databinding.ActivityLettersQuizBinding
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
@@ -24,29 +24,28 @@ import java.io.File
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-
-data class NumbersQuizQuestion(
-    val type: String, // Always "number" for this activity
+data class LettersQuizQuestion(
+    val type: String, // Always "letter" for this activity
     val correctAnswer: String,
     val videoUrl: String,
     val options: List<String>
 )
 
-data class NumbersQuizProgress(
+data class LettersQuizProgress(
     val totalQuestions: Int,
     val correctAnswers: Int,
     val currentStreak: Int,
     val bestStreak: Int
 )
 
-class NumbersQuizActivity : AppCompatActivity() {
+class LettersQuizActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityNumbersQuizBinding
+    private lateinit var binding: ActivityLettersQuizBinding
     private lateinit var player: ExoPlayer
-    private lateinit var currentQuestion: NumbersQuizQuestion
-    private val questions = mutableListOf<NumbersQuizQuestion>()
-    private var currentProgress = NumbersQuizProgress(0, 0, 0, 0)
-    private val sharedPref by lazy { getSharedPreferences("NumbersQuizProgress", MODE_PRIVATE) }
+    private lateinit var currentQuestion: LettersQuizQuestion
+    private val questions = mutableListOf<LettersQuizQuestion>()
+    private var currentProgress = LettersQuizProgress(0, 0, 0, 0)
+    private val sharedPref by lazy { getSharedPreferences("LettersQuizProgress", MODE_PRIVATE) }
 
     // Timer variables: 15 sec per question.
     private var questionTimer: CountDownTimer? = null
@@ -54,7 +53,7 @@ class NumbersQuizActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNumbersQuizBinding.inflate(layoutInflater)
+        binding = ActivityLettersQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initialize ExoPlayer for video playback.
@@ -76,24 +75,27 @@ class NumbersQuizActivity : AppCompatActivity() {
     }
 
     /**
-     * Setup quiz by generating only number questions.
+     * Setup quiz by generating letter questions (A-Z).
      */
     private fun setupQuiz() {
-        questions.addAll(generateNumberQuestions())
+        questions.addAll(generateLetterQuestions())
         questions.shuffle()
         currentProgress = currentProgress.copy(totalQuestions = questions.size)
     }
 
     /**
-     * Generate number questions from 0 to 9 using VideoRepository.
+     * Generate letter questions from A to Z.
+     * For each letter, the video URL is obtained by calling:
+     * VideoRepository.getCloudinaryUrl("l{letter}", "front")
+     * (Ensure your VideoRepository is configured for letters, e.g. "la_front" for A, "lb_front" for B, etc.)
      */
-    private fun generateNumberQuestions(): List<NumbersQuizQuestion> {
-        return (0..9).map { number ->
-            NumbersQuizQuestion(
-                type = "number",
-                correctAnswer = number.toString(),
-                videoUrl = VideoRepository.getCloudinaryUrl("n$number", "front"),
-                options = generateOptions(number.toString(), 0..9)
+    private fun generateLetterQuestions(): List<LettersQuizQuestion> {
+        return ('A'..'Z').map { letter ->
+            LettersQuizQuestion(
+                type = "letter",
+                correctAnswer = letter.toString(),
+                videoUrl = VideoRepository.getCloudinaryUrl("l${letter.lowercase()}", "front"),
+                options = generateOptions(letter.toString(), ('A'..'Z').toList())
             )
         }
     }
@@ -142,8 +144,8 @@ class NumbersQuizActivity : AppCompatActivity() {
             return
         }
         currentQuestion = questions.removeFirst()
-        // Build video code from correctAnswer (e.g., "n5" for answer "5")
-        val videoCode = "n" + currentQuestion.correctAnswer
+        // Build video code from correctAnswer (e.g., "la" for answer "A")
+        val videoCode = "l" + currentQuestion.correctAnswer.lowercase(Locale.getDefault())
         val localUri = getLocalVideoUri(videoCode, "front", currentQuestion.videoUrl)
         val mediaItem = MediaItem.fromUri(localUri)
         player.setMediaItem(mediaItem)
@@ -181,15 +183,12 @@ class NumbersQuizActivity : AppCompatActivity() {
             override fun onFinish() {
                 // Timer finished: mark the question as wrong.
                 checkAnswer("")
-                // Optionally reset the timer text.
                 binding.txtTimer.text = "0"
             }
         }.start()
     }
 
-
     private fun checkAnswer(selectedAnswer: String) {
-        // Cancel timer if applicable.
         questionTimer?.cancel()
 
         val isCorrect = selectedAnswer.equals(currentQuestion.correctAnswer, ignoreCase = true)
@@ -198,9 +197,7 @@ class NumbersQuizActivity : AppCompatActivity() {
             currentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0,
             bestStreak = maxOf(currentProgress.bestStreak, currentProgress.currentStreak)
         )
-
         saveProgress()
-        // Update progress UI immediately to reflect the new score.
         updateProgressUI()
         showFeedback(isCorrect)
 
@@ -213,11 +210,10 @@ class NumbersQuizActivity : AppCompatActivity() {
         }, 1000)
     }
 
-
     private fun showFeedback(isCorrect: Boolean) {
         val color = if (isCorrect) Color.GREEN else Color.RED
         binding.videoQuestion.foreground = android.graphics.drawable.ColorDrawable(color).apply {
-            alpha = 80 // Semi-transparent overlay for feedback.
+            alpha = 80
         }
         Handler(Looper.getMainLooper()).postDelayed({
             binding.videoQuestion.foreground = null
@@ -225,12 +221,12 @@ class NumbersQuizActivity : AppCompatActivity() {
     }
 
     private fun showResults() {
-        // Trigger confetti if the user got a perfect score.
+        // Trigger confetti if perfect score
         if (currentProgress.correctAnswers == currentProgress.totalQuestions) {
             showConfetti()
         }
         AlertDialog.Builder(this)
-            .setTitle("QUIZ COMPLETE!")
+            .setTitle("Quiz Complete!")
             .setMessage("Score: ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}")
             .setPositiveButton("Retry") { _, _ -> recreate() }
             .setNegativeButton("Exit") { _, _ -> finish() }
@@ -249,7 +245,6 @@ class NumbersQuizActivity : AppCompatActivity() {
         )
         binding.konfettiView.start(party)
     }
-
 
     private fun saveProgress() {
         with(sharedPref.edit()) {
@@ -273,7 +268,6 @@ class NumbersQuizActivity : AppCompatActivity() {
             }
     }
 
-    // Animate progress bar and update streak UI.
     private var progressAnimator: ValueAnimator? = null
 
     @SuppressLint("SetTextI18n")
@@ -281,7 +275,6 @@ class NumbersQuizActivity : AppCompatActivity() {
         val progress = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions) * 100
         val prevProgress = binding.progressBar.progress
 
-        // Update the score text
         binding.txtScore.text = "Score: ${currentProgress.correctAnswers}"
 
         progressAnimator?.cancel()
@@ -299,7 +292,8 @@ class NumbersQuizActivity : AppCompatActivity() {
             start()
         }
 
-        binding.txtStreakMain.text = "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
+        binding.txtStreakMain.text =
+            "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
         if (currentProgress.currentStreak > 0 && currentProgress.currentStreak % 5 == 0) {
             showStreakEffect(currentProgress.currentStreak)
         }

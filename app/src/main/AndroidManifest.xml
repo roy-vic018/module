@@ -16,6 +16,18 @@
         android:theme="@style/Theme.Module"
         tools:targetApi="31">
         <activity
+            android:name=".FamilyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmotionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GreetingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LettersQuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".NumbersQuizActivity"
             android:exported="false" />
         <activity

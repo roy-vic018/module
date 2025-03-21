@@ -27,7 +27,6 @@ class SignActivity : AppCompatActivity() {
     private lateinit var currentCategory: String
     private lateinit var currentList: List<String>
     private var currentIndex: Int = 0
-    // New variable to store the current video code for naming local files
     private var currentVideoCode: String = ""
     private lateinit var gestureDetector: GestureDetector
     private var player: ExoPlayer? = null
