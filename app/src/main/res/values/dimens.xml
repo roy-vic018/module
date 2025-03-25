@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="option_fixed_width">150dp</dimen>
+</resources>

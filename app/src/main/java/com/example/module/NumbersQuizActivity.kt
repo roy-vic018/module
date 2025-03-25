@@ -229,9 +229,31 @@ class NumbersQuizActivity : AppCompatActivity() {
         if (currentProgress.correctAnswers == currentProgress.totalQuestions) {
             showConfetti()
         }
+
+        // Define a passing threshold (e.g., 70% correct answers).
+        val passingThreshold = (currentProgress.totalQuestions * 0.7).toInt()
+        val passed = currentProgress.correctAnswers >= passingThreshold
+
+        // Save the flag to indicate whether this module is passed.
+        with(getSharedPreferences("progress", MODE_PRIVATE).edit()) {
+            putBoolean("numbers_passed", passed)
+            apply()
+        }
+
+        // Build the message based on pass/fail.
+        val message = if (passed) {
+            // Show positive feedback.
+            "Congratulations! You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
+                    "You've unlocked the next module!"
+        } else {
+            // Show an encouraging message.
+            "You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
+                    "Keep practicing and try again to unlock the next module."
+        }
+
         AlertDialog.Builder(this)
-            .setTitle("QUIZ COMPLETE!")
-            .setMessage("Score: ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}")
+            .setTitle("Quiz Complete!")
+            .setMessage(message)
             .setPositiveButton("Retry") { _, _ -> recreate() }
             .setNegativeButton("Exit") { _, _ -> finish() }
             .show()
@@ -273,37 +295,34 @@ class NumbersQuizActivity : AppCompatActivity() {
             }
     }
 
-    // Animate progress bar and update streak UI.
-    private var progressAnimator: ValueAnimator? = null
-
     @SuppressLint("SetTextI18n")
     private fun updateProgressUI() {
-        val progress = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions) * 100
-        val prevProgress = binding.progressBar.progress
+        // Calculate how many questions have been attempted.
+        val attemptedQuestions = currentProgress.totalQuestions - questions.size
+        // Compute progress percentage based on attempted questions.
+        val progressPercent = ((attemptedQuestions.toFloat() / currentProgress.totalQuestions) * 100).toInt()
 
-        // Update the score text
+        // Optionally, still show the score (if desired).
         binding.txtScore.text = "Score: ${currentProgress.correctAnswers}"
 
-        progressAnimator?.cancel()
-        progressAnimator = ValueAnimator.ofInt(prevProgress, progress.toInt()).apply {
+        val prevProgress = binding.progressBar.progress
+        val progressAnimator = ValueAnimator.ofInt(prevProgress, progressPercent).apply {
             duration = 500
             interpolator = OvershootInterpolator()
             addUpdateListener { animator ->
                 val value = animator.animatedValue as Int
                 binding.progressBar.progress = value
                 binding.txtProgressPercent.text = "$value%"
-                val translationX = (binding.progressBar.width * (value / 100f)) -
-                        (binding.progressIndicator.width / 2f)
+                val translationX = (binding.progressBar.width * (value / 100f)) - (binding.progressIndicator.width / 2f)
                 binding.progressIndicator.translationX = translationX
             }
-            start()
         }
+        progressAnimator.start() // Animate progress bar and update streak UI.
 
-        binding.txtStreakMain.text = "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
-        if (currentProgress.currentStreak > 0 && currentProgress.currentStreak % 5 == 0) {
-            showStreakEffect(currentProgress.currentStreak)
-        }
+        binding.txtStreakMain.text =
+            "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
     }
+
 
     private fun showStreakEffect(streak: Int) {
         val anim = AnimationUtils.loadAnimation(this, R.anim.streak_pulse).apply {

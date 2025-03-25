@@ -59,7 +59,7 @@
                     android:fontFamily="@font/afacad_medium"
                     android:padding="4dp"
                     android:paddingStart="30dp"
-                    android:text="22"
+                    android:text="15"
                     android:textColor="#1A1212"
                     android:textSize="25sp" />
             </androidx.media3.ui.PlayerView>

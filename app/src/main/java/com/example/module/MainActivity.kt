@@ -3,6 +3,7 @@ package com.example.module
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.work.OneTimeWorkRequestBuilder
@@ -19,24 +20,39 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up click listener for the Letters CardView
-        binding.btnLetters.setOnClickListener {
-            startActivity(Intent(this, LettersActivity::class.java))
-        }
-
         // Set up click listener for the Numbers CardView
         binding.btnNumbers.setOnClickListener {
             startActivity(Intent(this, NumbersActivity::class.java))
         }
 
-        // Set up click listener for the Words CardView
-        binding.btnWords.setOnClickListener {
-            startActivity(Intent(this, WordsActivity::class.java))
+        binding.btnLetters.setOnClickListener {
+            val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+            val numbersPassed = prefs.getBoolean("numbers_passed", false)
+            if (numbersPassed) {
+                startActivity(Intent(this, LettersActivity::class.java))
+            } else {
+                Toast.makeText(this, "Please pass the Number Quiz to unlock Alphabet.", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        // Set up click listener for the Quiz CardView
+        binding.btnWords.setOnClickListener {
+            val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+            val lettersPassed = prefs.getBoolean("letters_passed", false)
+            if (lettersPassed) {
+                startActivity(Intent(this, WordsActivity::class.java))
+            } else {
+                Toast.makeText(this, "Please pass the Letters Quiz to unlock Words.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.btnStartQuiz.setOnClickListener {
-            startActivity(Intent(this, NumbersQuizActivity::class.java))
+            val prefs = getSharedPreferences("progress", MODE_PRIVATE)
+            val wordsPassed = prefs.getBoolean("words_passed", false)
+            if (wordsPassed) {
+                startActivity(Intent(this, QuizActivity::class.java))
+            } else {
+                Toast.makeText(this, "Please pass the Words Quiz to unlock the General Quiz.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Trigger the bulk video download using WorkManager

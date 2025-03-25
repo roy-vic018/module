@@ -16,7 +16,7 @@ import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.module.databinding.ActivityLettersQuizBinding
+import com.example.module.databinding.ActivityWordsQuizBinding
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
@@ -24,28 +24,29 @@ import java.io.File
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-data class LettersQuizQuestion(
-    val type: String, // Always "letter" for this activity
+
+data class WordsQuizQuestion(
+    val type: String, // Always "word" for this activity
     val correctAnswer: String,
     val videoUrl: String,
     val options: List<String>
 )
 
-data class LettersQuizProgress(
+data class WordsQuizProgress(
     val totalQuestions: Int,
     val correctAnswers: Int,
     val currentStreak: Int,
     val bestStreak: Int
 )
 
-class LettersQuizActivity : AppCompatActivity() {
+class WordsQuizActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLettersQuizBinding
+    private lateinit var binding: ActivityWordsQuizBinding
     private lateinit var player: ExoPlayer
-    private lateinit var currentQuestion: LettersQuizQuestion
-    private val questions = mutableListOf<LettersQuizQuestion>()
-    private var currentProgress = LettersQuizProgress(0, 0, 0, 0)
-    private val sharedPref by lazy { getSharedPreferences("LettersQuizProgress", MODE_PRIVATE) }
+    private lateinit var currentQuestion: WordsQuizQuestion
+    private val questions = mutableListOf<WordsQuizQuestion>()
+    private var currentProgress = WordsQuizProgress(0, 0, 0, 0)
+    private val sharedPref by lazy { getSharedPreferences("WordsQuizProgress", MODE_PRIVATE) }
 
     // Timer variables: 15 sec per question.
     private var questionTimer: CountDownTimer? = null
@@ -53,7 +54,7 @@ class LettersQuizActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLettersQuizBinding.inflate(layoutInflater)
+        binding = ActivityWordsQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initialize ExoPlayer for video playback.
@@ -75,27 +76,27 @@ class LettersQuizActivity : AppCompatActivity() {
     }
 
     /**
-     * Setup quiz by generating letter questions (A-Z).
+     * Setup quiz by generating only number questions.
      */
     private fun setupQuiz() {
-        questions.addAll(generateLetterQuestions())
+        questions.addAll(generateWordsQuestions())
         questions.shuffle()
         currentProgress = currentProgress.copy(totalQuestions = questions.size)
     }
 
     /**
-     * Generate letter questions from A to Z.
-     * For each letter, the video URL is obtained by calling:
-     * VideoRepository.getCloudinaryUrl("l{letter}", "front")
-     * (Ensure your VideoRepository is configured for letters, e.g. "la_front" for A, "lb_front" for B, etc.)
+     * Generate word questions using VideoRepository.
      */
-    private fun generateLetterQuestions(): List<LettersQuizQuestion> {
-        return ('A'..'Z').map { letter ->
-            LettersQuizQuestion(
-                type = "letter",
-                correctAnswer = letter.toString(),
-                videoUrl = VideoRepository.getCloudinaryUrl("l${letter.lowercase()}", "front"),
-                options = generateOptions(letter.toString(), ('A'..'Z').toList())
+    private fun generateWordsQuestions(): List<WordsQuizQuestion> {
+        // A list of words corresponding to the numbers zero to nine.
+        val words = listOf("goodmorning", "goodafternoon", "goodevening", "takecare", "bye")
+
+        return words.map { word ->
+            WordsQuizQuestion(
+                type = "word", // The type now indicates it's a word question.
+                correctAnswer = word, // The correct answer is the word itself.
+                videoUrl = VideoRepository.getCloudinaryUrl("w_$word", "front"),
+                options = generateOptions(word, words)  // Generate options using the list of words.
             )
         }
     }
@@ -144,8 +145,8 @@ class LettersQuizActivity : AppCompatActivity() {
             return
         }
         currentQuestion = questions.removeFirst()
-        // Build video code from correctAnswer (e.g., "la" for answer "A")
-        val videoCode = "l" + currentQuestion.correctAnswer.lowercase(Locale.getDefault())
+        // Build video code from correctAnswer
+        val videoCode = "w" + currentQuestion.correctAnswer
         val localUri = getLocalVideoUri(videoCode, "front", currentQuestion.videoUrl)
         val mediaItem = MediaItem.fromUri(localUri)
         player.setMediaItem(mediaItem)
@@ -165,7 +166,7 @@ class LettersQuizActivity : AppCompatActivity() {
     /**
      * Starts a 15-second timer for the current question.
      * If the timer finishes, checkAnswer("") is called to mark the question as incorrect.
-     */
+     */ 
     private fun startQuestionTimer() {
         questionTimer?.cancel()
         questionTimer = object : CountDownTimer(questionTimeInMillis, 1000) {
@@ -183,12 +184,15 @@ class LettersQuizActivity : AppCompatActivity() {
             override fun onFinish() {
                 // Timer finished: mark the question as wrong.
                 checkAnswer("")
+                // Optionally reset the timer text.
                 binding.txtTimer.text = "0"
             }
         }.start()
     }
 
+
     private fun checkAnswer(selectedAnswer: String) {
+        // Cancel timer if applicable.
         questionTimer?.cancel()
 
         val isCorrect = selectedAnswer.equals(currentQuestion.correctAnswer, ignoreCase = true)
@@ -197,7 +201,9 @@ class LettersQuizActivity : AppCompatActivity() {
             currentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0,
             bestStreak = maxOf(currentProgress.bestStreak, currentProgress.currentStreak)
         )
+
         saveProgress()
+        // Update progress UI immediately to reflect the new score.
         updateProgressUI()
         showFeedback(isCorrect)
 
@@ -213,7 +219,7 @@ class LettersQuizActivity : AppCompatActivity() {
     private fun showFeedback(isCorrect: Boolean) {
         val color = if (isCorrect) Color.GREEN else Color.RED
         binding.videoQuestion.foreground = android.graphics.drawable.ColorDrawable(color).apply {
-            alpha = 80
+            alpha = 80 // Semi-transparent overlay for feedback.
         }
         Handler(Looper.getMainLooper()).postDelayed({
             binding.videoQuestion.foreground = null
@@ -226,23 +232,25 @@ class LettersQuizActivity : AppCompatActivity() {
             showConfetti()
         }
 
-        // Define a passing threshold: for example, 70% of the total questions.
+        // Define a passing threshold (e.g., 70% correct answers).
         val passingThreshold = (currentProgress.totalQuestions * 0.7).toInt()
         val passed = currentProgress.correctAnswers >= passingThreshold
 
-        // Save the result flag for letters in SharedPreferences.
+        // Save the flag to indicate whether this module is passed.
         with(getSharedPreferences("progress", MODE_PRIVATE).edit()) {
-            putBoolean("letters_passed", passed)
+            putBoolean("words_passed", passed)
             apply()
         }
 
-        // Build a feedback message.
+        // Build the message based on pass/fail.
         val message = if (passed) {
+            // Show positive feedback.
             "Congratulations! You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
-                    "You've unlocked the next module!"
+                    "You've unlocked the General Quiz!"
         } else {
+            // Show an encouraging message.
             "You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
-                    "Keep practicing and try again to unlock the next module."
+                    "Keep practicing and try again to unlock the General Quiz."
         }
 
         AlertDialog.Builder(this)
@@ -252,6 +260,7 @@ class LettersQuizActivity : AppCompatActivity() {
             .setNegativeButton("Exit") { _, _ -> finish() }
             .show()
     }
+
 
     private fun showConfetti() {
         val party = Party(
@@ -265,6 +274,7 @@ class LettersQuizActivity : AppCompatActivity() {
         )
         binding.konfettiView.start(party)
     }
+
 
     private fun saveProgress() {
         with(sharedPref.edit()) {
@@ -315,7 +325,6 @@ class LettersQuizActivity : AppCompatActivity() {
         binding.txtStreakMain.text =
             "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
     }
-
 
     private fun showStreakEffect(streak: Int) {
         val anim = AnimationUtils.loadAnimation(this, R.anim.streak_pulse).apply {

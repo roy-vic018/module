@@ -214,7 +214,7 @@ class SignActivity : AppCompatActivity() {
         player?.setMediaItem(mediaItem)
         player?.prepare() // Prepare the media for playback
         player?.playWhenReady = true // Auto-play immediately
-        player?.setPlaybackSpeed(1.5f) // Set speed to 1.5x
+        player?.setPlaybackSpeed(1.2f) // Set speed to 1.5x
     }
 
     /**

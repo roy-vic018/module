@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.module.databinding.ActivityNumbersBinding
+import com.bumptech.glide.Glide
 
 class NumbersActivity : AppCompatActivity() {
 
@@ -82,13 +83,19 @@ class NumbersActivity : AppCompatActivity() {
             // Module not complete; lock the quiz.
             binding.cardQuiz.isClickable = false
             binding.txtQuizLabel.text = "Quiz Locked"
-            binding.imgQuizIcon.setImageResource(R.drawable.ic_locked)
+            Glide.with(this)
+                .asGif()
+                .load(R.raw.animated_locked) // Your animated GIF resource for locked state
+                .into(binding.imgQuizIcon)
             binding.cardQuiz.setOnClickListener(null)
         } else {
             // Module complete; unlock quiz.
             binding.cardQuiz.isClickable = true
             binding.txtQuizLabel.text = "Take Numbers Quiz"
-            binding.imgQuizIcon.setImageResource(R.drawable.ic_unlocked)
+            Glide.with(this)
+                .asGif()
+                .load(R.raw.animated_unlocked) // Your animated GIF resource for unlocked state
+                .into(binding.imgQuizIcon)
             binding.cardQuiz.setOnClickListener {
                 val intent = Intent(this, NumbersQuizActivity::class.java)
                 intent.putExtra("quizType", "number")

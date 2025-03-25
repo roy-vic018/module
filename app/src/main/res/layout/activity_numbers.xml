@@ -256,15 +256,16 @@
                     android:id="@+id/imgQuizIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_rocket" />
+                    android:src="@raw/animated_locked" />
 
                 <TextView
                     android:id="@+id/txtQuizLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Take Numbers Quiz"
                     android:fontFamily="@font/lemon"
+                    android:text="Take Numbers Quiz"
+                    android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
             </LinearLayout>

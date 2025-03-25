@@ -16,6 +16,7 @@ media3Exoplayer = "1.5.1"
 media3 = "1.2.0"
 workRuntimeKtx = "2.10.0"
 konfetti = "2.0.5"
+glide = "4.15.1"
 
 
 [libraries]
@@ -38,6 +39,8 @@ media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 konfetti-xml = { module = "nl.dionsegijn:konfetti-xml", version.ref = "konfetti" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 
 
 [plugins]

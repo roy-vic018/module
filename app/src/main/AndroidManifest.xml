@@ -16,13 +16,10 @@
         android:theme="@style/Theme.Module"
         tools:targetApi="31">
         <activity
-            android:name=".FamilyActivity"
+            android:name=".QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".EmotionsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GreetingsActivity"
+            android:name=".WordsQuizActivity"
             android:exported="false" />
         <activity
             android:name=".LettersQuizActivity"
