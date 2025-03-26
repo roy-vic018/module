@@ -122,7 +122,83 @@
                     app:backgroundTint="@null"
                     tools:ignore="HardcodedText,NewApi" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Help"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDoctor"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Doctor"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Hospital"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPolice"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Police"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPainful"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Painful/Hurt"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmergency"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_bg_ripple"
+                    android:fontFamily="@font/bakbak_one"
+                    android:text="Emergency"
+                    android:textColor="#E2D9D9"
+                    android:textSize="25sp"
+                    app:backgroundTint="@null"
+                    tools:ignore="HardcodedText,NewApi" />
 
                 <!-- You can add additional category buttons (Transportation, Food, Daily Activities) here -->
             </LinearLayout>

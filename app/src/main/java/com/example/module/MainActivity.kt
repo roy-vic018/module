@@ -78,9 +78,9 @@ class MainActivity : AppCompatActivity() {
         val numbersCompleted = prefs.getStringSet("numbers_completed", emptySet())?.size ?: 0
         updateModuleProgress(binding.numbersProgress, binding.tvNumbersPercent, numbersCompleted, 10)
 
-        // Words (5 items)
+        // Words (11 items)
         val wordsCompleted = prefs.getStringSet("words_completed", emptySet())?.size ?: 0
-        updateModuleProgress(binding.wordsProgress, binding.tvWordsPercent, wordsCompleted, 5)
+        updateModuleProgress(binding.wordsProgress, binding.tvWordsPercent, wordsCompleted, 11)
     }
 
     private fun updateModuleProgress(

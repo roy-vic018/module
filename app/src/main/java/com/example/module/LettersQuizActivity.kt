@@ -192,11 +192,15 @@ class LettersQuizActivity : AppCompatActivity() {
         questionTimer?.cancel()
 
         val isCorrect = selectedAnswer.equals(currentQuestion.correctAnswer, ignoreCase = true)
+        // Compute the new streak value.
+        val newCurrentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0
+
         currentProgress = currentProgress.copy(
             correctAnswers = currentProgress.correctAnswers + if (isCorrect) 1 else 0,
-            currentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0,
-            bestStreak = maxOf(currentProgress.bestStreak, currentProgress.currentStreak)
+            currentStreak = newCurrentStreak,
+            bestStreak = maxOf(currentProgress.bestStreak, newCurrentStreak)
         )
+
         saveProgress()
         updateProgressUI()
         showFeedback(isCorrect)
@@ -209,6 +213,7 @@ class LettersQuizActivity : AppCompatActivity() {
             }
         }, 1000)
     }
+
 
     private fun showFeedback(isCorrect: Boolean) {
         val color = if (isCorrect) Color.GREEN else Color.RED

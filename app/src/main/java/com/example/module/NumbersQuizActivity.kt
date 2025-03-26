@@ -189,18 +189,19 @@ class NumbersQuizActivity : AppCompatActivity() {
 
 
     private fun checkAnswer(selectedAnswer: String) {
-        // Cancel timer if applicable.
         questionTimer?.cancel()
 
         val isCorrect = selectedAnswer.equals(currentQuestion.correctAnswer, ignoreCase = true)
+        // Calculate the new current streak based on whether the answer is correct.
+        val newCurrentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0
+        // Then update bestStreak using the new current streak value.
         currentProgress = currentProgress.copy(
             correctAnswers = currentProgress.correctAnswers + if (isCorrect) 1 else 0,
-            currentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0,
-            bestStreak = maxOf(currentProgress.bestStreak, currentProgress.currentStreak)
+            currentStreak = newCurrentStreak,
+            bestStreak = maxOf(currentProgress.bestStreak, newCurrentStreak)
         )
 
         saveProgress()
-        // Update progress UI immediately to reflect the new score.
         updateProgressUI()
         showFeedback(isCorrect)
 

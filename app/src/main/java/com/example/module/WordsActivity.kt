@@ -24,16 +24,22 @@ class WordsActivity : AppCompatActivity() {
         updateQuizCard()
 
         // Words to video mapping
-        val numberMap = mapOf(
+        val wordMap = mapOf(
             binding.btnGoodmorning to Pair("Magandang Umaga", "w_goodmorning"),
             binding.btnGoodafternoon to Pair("Magandang Hapon", "w_goodafternoon"),
             binding.btnGoodevening to Pair("Magandang Gabi", "w_goodevening"),
             binding.btnTakecare to Pair("Ingat ka", "w_takecare"),
             binding.btnBye to Pair("Paalam", "w_bye"),
+            binding.btnHelp to Pair("Help", "w_help"),
+            binding.btnDoctor to Pair("Doctor", "w_doctor"),
+            binding.btnHospital to Pair("Hospital", "w_hospital"),
+            binding.btnPolice to Pair("Police", "w_police"),
+            binding.btnPainful to Pair("Painful/Hurt", "w_painful"),
+            binding.btnEmergency to Pair("Emergency", "w_emergency")
         )
 
         // Set click listeners for all words buttons
-        numberMap.forEach { (button, pair) ->
+        wordMap.forEach { (button, pair) ->
             button.setOnClickListener {
                 showSign(pair.first, pair.second)
             }
@@ -47,7 +53,7 @@ class WordsActivity : AppCompatActivity() {
     }
 
     /**
-     * Opens SignActivity with the corresponding number's display text and video code.
+     * Opens SignActivity with the corresponding words display text and video code.
      */
     private fun showSign(displayText: String, videoCode: String) {
         // Track progress in SharedPreferences
@@ -68,13 +74,13 @@ class WordsActivity : AppCompatActivity() {
 
     /**
      * Updates the quiz CardView based on progress.
-     * If the user has completed all 10 numbers, the quiz becomes unlocked.
+     * If the user has completed all 11 words, the quiz becomes unlocked.
      */
     private fun updateQuizCard() {
         val prefs = getSharedPreferences("progress", MODE_PRIVATE)
         val wordsCompletedCount = prefs.getStringSet("words_completed", emptySet())?.size ?: 0
 
-        if (wordsCompletedCount < 5) {
+        if (wordsCompletedCount < 11) {
             // Module not complete; lock the quiz.
             binding.cardQuiz.isClickable = false
             binding.txtQuizLabel.text = "Quiz Locked"

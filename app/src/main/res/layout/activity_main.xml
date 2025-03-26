@@ -72,7 +72,7 @@
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
-                        android:text="Learn Numbers"
+                        android:text="LEARN NUMBERS"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
 
@@ -137,7 +137,7 @@
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
-                        android:text="Learn Alphabet"
+                        android:text="LEARN ALPHABET"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
                 </LinearLayout>
@@ -201,7 +201,7 @@
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
-                        android:text="Learn Words"
+                        android:text="LEARN WORDS"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,VisualLintButtonSize" />
                 </LinearLayout>
@@ -227,9 +227,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/wendy_one"
                         android:gravity="center"
                         android:text="Take a Quiz"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText,TextContrastCheck" />
 
@@ -238,9 +239,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/afacad_medium"
                         android:gravity="center"
                         android:text="Test your knowledge of letters, numbers, and words!"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         tools:ignore="HardcodedText,TextContrastCheck" />
 
                     <!-- Start Quiz Button -->
@@ -252,7 +254,7 @@
                         android:fontFamily="@font/wendy_one"
                         android:textSize="20sp"
                         app:backgroundTint="@null"
-                        android:text="Start Quiz"
+                        android:text="START QUIZ"
                         android:textColor="#E2D9D9"
                         tools:ignore="HardcodedText,NewApi,TouchTargetSizeCheck,VisualLintButtonSize" />
                 </LinearLayout>

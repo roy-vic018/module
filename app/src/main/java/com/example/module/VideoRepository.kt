@@ -84,10 +84,28 @@ object VideoRepository {
         "lz_side" to (CLOUD_2 to "Side_view_of_Z_mrcs9n"),
 
         // Words (Stored in Cloud 2)
-        "w_bye_front" to (CLOUD_2 to "word_bye_front_abc123"),
-        "w_bye_side" to (CLOUD_2 to "word_bye_side_def456"),
-        "w_takecare_front" to (CLOUD_2 to "word_takecare_front_ghi789"),
-        "w_takecare_side" to (CLOUD_2 to "word_takecare_side_jkl012")
+        "w_goodmorning_front" to (CLOUD_2 to "goodmorning_front_jc53wl"),
+        "w_goodmorning_side" to (CLOUD_2 to "goodmorning_side_gsdumm"),
+        "w_goodafternoon_front" to (CLOUD_2 to "goodafternoon_front_rkrymd"),
+        "w_goodafternoon_side" to (CLOUD_2 to "goodafternoon_side_hjxtjy"),
+        "w_goodevening_front" to (CLOUD_2 to "goodevening_front_ojicb4"),
+        "w_goodevening_side" to (CLOUD_2 to "goodevening_side_exfh2a"),
+        "w_takecare_front" to (CLOUD_2 to "takecare_front_hwkj2b"),
+        "w_takecare_side" to (CLOUD_2 to "takecare_side_gzavo3"),
+        "w_bye_front" to (CLOUD_2 to "bye_front_bwgbkj"),
+        "w_bye_side" to (CLOUD_2 to "bye_side_t6xryk"),
+        "w_help_front" to (CLOUD_2 to "help_front_asfqxy"),
+        "w_help_side" to (CLOUD_2 to "help_side_p2ooq4"),
+        "w_doctor_front" to (CLOUD_2 to "doctor_front_t2tfaj"),
+        "w_doctor_side" to (CLOUD_2 to "doctor_side_nnnccb"),
+        "w_hospital_front" to (CLOUD_2 to "hospital_front_lh1nxz"),
+        "w_hospital_side" to (CLOUD_2 to "hospital_side_czrgz7"),
+        "w_police_front" to (CLOUD_2 to "police_front_fl4npr"),
+        "w_police_side" to (CLOUD_2 to "police_side_do9j9x"),
+        "w_painful_front" to (CLOUD_2 to "painful_front_dosuvn"),
+        "w_painful_side" to (CLOUD_2 to "painful_side_jzq6vj"),
+        "w_emergency_front" to (CLOUD_2 to "emergency_front_kc3yfh"),
+        "w_emergency_side" to (CLOUD_2 to "emergency_side_i6kgdg")
     )
 
     fun getCloudinaryUrl(videoCode: String, viewType: String): String {

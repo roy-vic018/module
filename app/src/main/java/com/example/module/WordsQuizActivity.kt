@@ -24,7 +24,6 @@ import java.io.File
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-
 data class WordsQuizQuestion(
     val type: String, // Always "word" for this activity
     val correctAnswer: String,
@@ -76,7 +75,7 @@ class WordsQuizActivity : AppCompatActivity() {
     }
 
     /**
-     * Setup quiz by generating only number questions.
+     * Setup quiz by generating word questions.
      */
     private fun setupQuiz() {
         questions.addAll(generateWordsQuestions())
@@ -86,23 +85,36 @@ class WordsQuizActivity : AppCompatActivity() {
 
     /**
      * Generate word questions using VideoRepository.
+     * Here we define a list of pairs where the first element is the Tagalog text
+     * and the second element is the video code suffix.
      */
     private fun generateWordsQuestions(): List<WordsQuizQuestion> {
-        // A list of words corresponding to the numbers zero to nine.
-        val words = listOf("goodmorning", "goodafternoon", "goodevening", "takecare", "bye")
+        val wordPairs = listOf(
+            Pair("Magandang Umaga", "goodmorning"),
+            Pair("Magandang Hapon", "goodafternoon"),
+            Pair("Magandang Gabi", "goodevening"),
+            Pair("Ingat ka", "takecare"),
+            Pair("Paalam", "bye"),
+            Pair("Help", "help"),
+            Pair("Doctor", "doctor"),
+            Pair("Hospital", "hospital"),
+            Pair("Police", "police"),
+            Pair("Painful", "painful"),
+            Pair("Emergency", "emergency")
+        )
 
-        return words.map { word ->
+        return wordPairs.map { pair ->
             WordsQuizQuestion(
-                type = "word", // The type now indicates it's a word question.
-                correctAnswer = word, // The correct answer is the word itself.
-                videoUrl = VideoRepository.getCloudinaryUrl("w_$word", "front"),
-                options = generateOptions(word, words)  // Generate options using the list of words.
+                type = "word",
+                correctAnswer = pair.first, // Tagalog display text
+                videoUrl = VideoRepository.getCloudinaryUrl("w_${pair.second}", "front"),
+                options = generateOptions(pair.first, wordPairs.map { it.first })
             )
         }
     }
 
     /**
-     * Generate options for a given correct answer from a pool.
+     * Generate options for a given correct answer from a pool of Tagalog words.
      */
     private fun <T> generateOptions(correct: T, pool: Iterable<T>): List<String> {
         val options = mutableListOf(correct.toString())
@@ -116,9 +128,8 @@ class WordsQuizActivity : AppCompatActivity() {
         while (options.size < 4) {
             options.add(correct.toString())
         }
-        return options.shuffled().map {
-            it.replace("_", " ").replaceFirstChar { ch -> ch.titlecase(Locale.ROOT) }
-        }
+        // Shuffle the options
+        return options.shuffled()
     }
 
     /**
@@ -145,8 +156,10 @@ class WordsQuizActivity : AppCompatActivity() {
             return
         }
         currentQuestion = questions.removeFirst()
-        // Build video code from correctAnswer
-        val videoCode = "w" + currentQuestion.correctAnswer
+        // Build video code from correctAnswer.
+        // Note: VideoRepository still expects the code suffix; we assume the correct answer was built using the pair.
+        val videoCode = "w_" + currentQuestion.correctAnswer.lowercase(Locale.getDefault())
+            .replace(" ", "") // Remove spaces to match the video code format.
         val localUri = getLocalVideoUri(videoCode, "front", currentQuestion.videoUrl)
         val mediaItem = MediaItem.fromUri(localUri)
         player.setMediaItem(mediaItem)
@@ -166,7 +179,7 @@ class WordsQuizActivity : AppCompatActivity() {
     /**
      * Starts a 15-second timer for the current question.
      * If the timer finishes, checkAnswer("") is called to mark the question as incorrect.
-     */ 
+     */
     private fun startQuestionTimer() {
         questionTimer?.cancel()
         questionTimer = object : CountDownTimer(questionTimeInMillis, 1000) {
@@ -184,26 +197,25 @@ class WordsQuizActivity : AppCompatActivity() {
             override fun onFinish() {
                 // Timer finished: mark the question as wrong.
                 checkAnswer("")
-                // Optionally reset the timer text.
                 binding.txtTimer.text = "0"
             }
         }.start()
     }
 
-
     private fun checkAnswer(selectedAnswer: String) {
-        // Cancel timer if applicable.
         questionTimer?.cancel()
 
         val isCorrect = selectedAnswer.equals(currentQuestion.correctAnswer, ignoreCase = true)
+        // Compute the new streak value.
+        val newCurrentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0
+
         currentProgress = currentProgress.copy(
             correctAnswers = currentProgress.correctAnswers + if (isCorrect) 1 else 0,
-            currentStreak = if (isCorrect) currentProgress.currentStreak + 1 else 0,
-            bestStreak = maxOf(currentProgress.bestStreak, currentProgress.currentStreak)
+            currentStreak = newCurrentStreak,
+            bestStreak = maxOf(currentProgress.bestStreak, newCurrentStreak)
         )
 
         saveProgress()
-        // Update progress UI immediately to reflect the new score.
         updateProgressUI()
         showFeedback(isCorrect)
 
@@ -219,7 +231,7 @@ class WordsQuizActivity : AppCompatActivity() {
     private fun showFeedback(isCorrect: Boolean) {
         val color = if (isCorrect) Color.GREEN else Color.RED
         binding.videoQuestion.foreground = android.graphics.drawable.ColorDrawable(color).apply {
-            alpha = 80 // Semi-transparent overlay for feedback.
+            alpha = 80
         }
         Handler(Looper.getMainLooper()).postDelayed({
             binding.videoQuestion.foreground = null
@@ -231,24 +243,22 @@ class WordsQuizActivity : AppCompatActivity() {
         if (currentProgress.correctAnswers == currentProgress.totalQuestions) {
             showConfetti()
         }
+        if (currentProgress.correctAnswers == currentProgress.totalQuestions) {
+            showConfetti()
+        }
 
-        // Define a passing threshold (e.g., 70% correct answers).
         val passingThreshold = (currentProgress.totalQuestions * 0.7).toInt()
         val passed = currentProgress.correctAnswers >= passingThreshold
 
-        // Save the flag to indicate whether this module is passed.
         with(getSharedPreferences("progress", MODE_PRIVATE).edit()) {
             putBoolean("words_passed", passed)
             apply()
         }
 
-        // Build the message based on pass/fail.
         val message = if (passed) {
-            // Show positive feedback.
             "Congratulations! You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
                     "You've unlocked the General Quiz!"
         } else {
-            // Show an encouraging message.
             "You scored ${currentProgress.correctAnswers}/${currentProgress.totalQuestions}.\n" +
                     "Keep practicing and try again to unlock the General Quiz."
         }
@@ -260,7 +270,6 @@ class WordsQuizActivity : AppCompatActivity() {
             .setNegativeButton("Exit") { _, _ -> finish() }
             .show()
     }
-
 
     private fun showConfetti() {
         val party = Party(
@@ -274,7 +283,6 @@ class WordsQuizActivity : AppCompatActivity() {
         )
         binding.konfettiView.start(party)
     }
-
 
     private fun saveProgress() {
         with(sharedPref.edit()) {
@@ -300,12 +308,9 @@ class WordsQuizActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun updateProgressUI() {
-        // Calculate how many questions have been attempted.
         val attemptedQuestions = currentProgress.totalQuestions - questions.size
-        // Compute progress percentage based on attempted questions.
         val progressPercent = ((attemptedQuestions.toFloat() / currentProgress.totalQuestions) * 100).toInt()
 
-        // Optionally, still show the score (if desired).
         binding.txtScore.text = "Score: ${currentProgress.correctAnswers}"
 
         val prevProgress = binding.progressBar.progress
@@ -320,16 +325,9 @@ class WordsQuizActivity : AppCompatActivity() {
                 binding.progressIndicator.translationX = translationX
             }
         }
-        progressAnimator.start() // Animate progress bar and update streak UI.
+        progressAnimator.start()
 
         binding.txtStreakMain.text =
             "Current Streak: ${currentProgress.currentStreak}\nBest Streak: ${currentProgress.bestStreak}"
-    }
-
-    private fun showStreakEffect(streak: Int) {
-        val anim = AnimationUtils.loadAnimation(this, R.anim.streak_pulse).apply {
-            repeatCount = 2
-        }
-        binding.txtStreakMain.startAnimation(anim)
     }
 }

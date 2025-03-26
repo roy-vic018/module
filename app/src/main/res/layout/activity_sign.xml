@@ -66,15 +66,22 @@
 
                 <TextView
                     android:id="@+id/txtSign"
-                    android:layout_width="401dp"
+                    android:layout_width="370dp"
                     android:layout_height="159dp"
                     android:layout_gravity="center_horizontal"
+                    android:autoSizeMaxTextSize="56sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/bakbak_one"
                     android:paddingBottom="24dp"
                     android:textAlignment="center"
+                    android:textColor="#090909"
                     android:textSize="56sp"
                     android:textStyle="bold"
-                    tools:ignore="TextContrastCheck"
+                    tools:ignore="TextContrastCheck,UnusedAttribute"
                     tools:text="A" />
+
 
                 <androidx.media3.ui.PlayerView
                     android:id="@+id/videoPlayer"

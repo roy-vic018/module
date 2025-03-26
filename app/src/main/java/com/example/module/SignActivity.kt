@@ -25,8 +25,12 @@ class SignActivity : AppCompatActivity() {
     private var frontViewVideoUrl: String = ""
     private var sideViewVideoUrl: String = ""
     private lateinit var currentCategory: String
-    private lateinit var currentList: List<String>
+    // For letters and numbers we'll use a List<String>
+    private var currentList: List<String> = emptyList()
+    // For words, we use a list of pairs: (Tagalog display text, video code)
+    private var currentWordList: List<Pair<String, String>> = emptyList()
     private var currentIndex: Int = 0
+    // When category is words, currentVideoCode will be taken from the pair's second element.
     private var currentVideoCode: String = ""
     private lateinit var gestureDetector: GestureDetector
     private var player: ExoPlayer? = null
@@ -43,9 +47,6 @@ class SignActivity : AppCompatActivity() {
         val videoCode = intent.getStringExtra("VIDEO_CODE") ?: ""
         currentCategory = intent.getStringExtra("CATEGORY") ?: "letters"
 
-        // Set the current video code
-        currentVideoCode = videoCode
-
         // Set the title dynamically based on category
         binding.txtSignTitle.text = when (currentCategory) {
             "letters" -> getString(R.string.sign_title_alphabet) // "Learn Alphabet"
@@ -54,20 +55,48 @@ class SignActivity : AppCompatActivity() {
             else -> getString(R.string.sign_title_alphabet)
         }
 
-        // Initialize item list based on category
-        currentList = when (currentCategory) {
-            "letters" -> ('a'..'z').map { "l$it" }
-            "numbers" -> (0..9).map { "n$it" }
-            "words" -> listOf("w_bye", "w_hello", "w_thank_you", "w_yes", "w_no")
-            else -> emptyList()
+        // Initialize list based on category
+        if (currentCategory == "words") {
+            // Use the Tagalog mapping defined in WordsActivity
+            currentWordList = listOf(
+                Pair("Magandang Umaga", "w_goodmorning"),
+                Pair("Magandang Hapon", "w_goodafternoon"),
+                Pair("Magandang Gabi", "w_goodevening"),
+                Pair("Ingat ka", "w_takecare"),
+                Pair("Paalam", "w_bye"),
+                Pair("Help", "w_help"),
+                Pair("Doctor", "w_doctor"),
+                Pair("Hospital", "w_hospital"),
+                Pair("Police", "w_police"),
+                Pair("Painful/Hurt", "w_painful"),
+                Pair("Emergency", "w_emergency")
+            )
+            // Find the index based on the passed video code
+            currentIndex = currentWordList.indexOfFirst { it.second == videoCode }.takeIf { it != -1 } ?: 0
+            // Set display text and currentVideoCode based on the pair
+            val wordPair = currentWordList[currentIndex]
+            binding.txtSign.text = wordPair.first
+            currentVideoCode = wordPair.second
+        } else {
+            // For letters and numbers, use your existing lists
+            currentList = when (currentCategory) {
+                "letters" -> ('a'..'z').map { "l$it" }
+                "numbers" -> (0..9).map { "n$it" }
+                else -> emptyList()
+            }
+            // Find index and display text using the existing logic
+            currentIndex = currentList.indexOf(videoCode).takeIf { it != -1 } ?: 0
+            val display = when (currentCategory) {
+                "letters" -> currentList[currentIndex].substring(1).uppercase()
+                "numbers" -> currentList[currentIndex].substring(1)
+                else -> currentList[currentIndex]
+            }
+            binding.txtSign.text = display
+            currentVideoCode = currentList[currentIndex]
         }
 
-        // Find current item index
-        currentIndex = currentList.indexOf(videoCode).takeIf { it != -1 } ?: 0
-        binding.txtSign.text = displayText
-
         // Update video URLs and initialize ExoPlayer
-        updateVideoUrls(videoCode)
+        updateVideoUrls(currentVideoCode)
         setupExoPlayer()
 
         // Play the front view video by default
@@ -112,45 +141,63 @@ class SignActivity : AppCompatActivity() {
     }
 
     private fun goToNextItem() {
-        if (currentIndex < currentList.size - 1) {
-            currentIndex++
-            updateDisplay()
+        if (currentCategory == "words") {
+            if (currentIndex < currentWordList.size - 1) {
+                currentIndex++
+                updateDisplay()
+            } else {
+                Toast.makeText(this, "Last item", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(this, "Last item", Toast.LENGTH_SHORT).show()
+            if (currentIndex < currentList.size - 1) {
+                currentIndex++
+                updateDisplay()
+            } else {
+                Toast.makeText(this, "Last item", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun goToPreviousItem() {
-        if (currentIndex > 0) {
-            currentIndex--
-            updateDisplay()
+        if (currentCategory == "words") {
+            if (currentIndex > 0) {
+                currentIndex--
+                updateDisplay()
+            } else {
+                Toast.makeText(this, "First item", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(this, "First item", Toast.LENGTH_SHORT).show()
+            if (currentIndex > 0) {
+                currentIndex--
+                updateDisplay()
+            } else {
+                Toast.makeText(this, "First item", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun updateDisplay() {
-        val newVideoCode = currentList[currentIndex]
-        val displayText = when (currentCategory) {
-            "letters" -> newVideoCode.substring(1).uppercase()
-            "numbers" -> newVideoCode.substring(1)
-            "words" -> newVideoCode.substring(2)
-                .replace("_", " ")
-                .split(" ")
-                .joinToString(" ") { word ->
-                    word.replaceFirstChar { it.uppercase() }
-                }
-            else -> newVideoCode
+        if (currentCategory == "words") {
+            val wordPair = currentWordList[currentIndex]
+            binding.txtSign.text = wordPair.first
+            currentVideoCode = wordPair.second
+            // Update video URLs and play the front view video
+            updateVideoUrls(currentVideoCode)
+            playVideo(frontViewVideoUrl, "front")
+            trackProgress(wordPair.first)
+        } else {
+            val newVideoCode = currentList[currentIndex]
+            val displayText = when (currentCategory) {
+                "letters" -> newVideoCode.substring(1).uppercase()
+                "numbers" -> newVideoCode.substring(1)
+                else -> newVideoCode
+            }
+            binding.txtSign.text = displayText
+            currentVideoCode = newVideoCode
+            updateVideoUrls(newVideoCode)
+            playVideo(frontViewVideoUrl, "front")
+            trackProgress(displayText)
         }
-        binding.txtSign.text = displayText
-
-        // Update the current video code and video URLs, then play the front view video
-        currentVideoCode = newVideoCode
-        updateVideoUrls(newVideoCode)
-        playVideo(frontViewVideoUrl, "front") // Play the new video
-
-        // Track progress for the current item
-        trackProgress(displayText)
     }
 
     private fun trackProgress(displayText: String) {
@@ -162,7 +209,6 @@ class SignActivity : AppCompatActivity() {
         }
     }
 
-    // Updated to use VideoRepository
     @OptIn(UnstableApi::class)
     private fun updateVideoUrls(videoCode: String) {
         frontViewVideoUrl = VideoRepository.getCloudinaryUrl(videoCode, "front")
@@ -201,20 +247,15 @@ class SignActivity : AppCompatActivity() {
 
     @SuppressLint("UnsafeOptInUsageError")
     private fun playVideo(onlineUrl: String, viewType: String) {
-        // Check if a local file exists
         val uri = getLocalVideoUri(currentVideoCode, viewType, onlineUrl)
         Log.d("VideoDebug", "Playing Video: $uri")
-
-        // Stop and clear existing MediaItem
         player?.stop()
         player?.clearMediaItems()
-
-        // Set a new MediaItem
         val mediaItem = MediaItem.fromUri(uri)
         player?.setMediaItem(mediaItem)
-        player?.prepare() // Prepare the media for playback
-        player?.playWhenReady = true // Auto-play immediately
-        player?.setPlaybackSpeed(1.2f) // Set speed to 1.5x
+        player?.prepare()
+        player?.playWhenReady = true
+        player?.setPlaybackSpeed(1.2f)
     }
 
     /**
