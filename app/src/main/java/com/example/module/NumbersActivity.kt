@@ -82,7 +82,7 @@ class NumbersActivity : AppCompatActivity() {
         if (numbersCompletedCount < 10) {
             // Module not complete; lock the quiz.
             binding.cardQuiz.isClickable = false
-            binding.txtQuizLabel.text = "Quiz Locked"
+            binding.txtQuizLabel.text = "QUIZ LOCKED"
             Glide.with(this)
                 .asGif()
                 .load(R.raw.animated_locked) // Your animated GIF resource for locked state
@@ -91,7 +91,7 @@ class NumbersActivity : AppCompatActivity() {
         } else {
             // Module complete; unlock quiz.
             binding.cardQuiz.isClickable = true
-            binding.txtQuizLabel.text = "Take Numbers Quiz"
+            binding.txtQuizLabel.text = "TAKE NUMBERS QUIZ"
             Glide.with(this)
                 .asGif()
                 .load(R.raw.animated_unlocked) // Your animated GIF resource for unlocked state

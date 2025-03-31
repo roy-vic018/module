@@ -98,7 +98,7 @@ class LettersActivity : AppCompatActivity() {
         if (lettersCompletedCount < 26) {
             // Module not complete; lock the quiz.
             binding.cardQuiz.isClickable = false
-            binding.txtQuizLabel.text = "Quiz Locked"
+            binding.txtQuizLabel.text = "QUIZ LOCKED"
             Glide.with(this)
                 .asGif()
                 .load(R.raw.animated_locked) // animated GIF resource for locked state
@@ -107,7 +107,7 @@ class LettersActivity : AppCompatActivity() {
         } else {
             // Module complete; unlock quiz.
             binding.cardQuiz.isClickable = true
-            binding.txtQuizLabel.text = "Take Letters Quiz"
+            binding.txtQuizLabel.text = "TAKE LETTERS QUIZ"
             Glide.with(this)
                 .asGif()
                 .load(R.raw.animated_unlocked) // animated GIF resource for unlocked state

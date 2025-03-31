@@ -176,6 +176,22 @@ class SignActivity : AppCompatActivity() {
         }
     }
 
+    // Update the swipe indicators based on the current item
+    private fun updateSwipeIndicators() {
+        // Check for "words" or other categories
+        if (currentCategory == "words") {
+            binding.leftSwipeIndicator.visibility =
+                if (currentIndex == 0) View.GONE else View.VISIBLE
+            binding.rightSwipeIndicator.visibility =
+                if (currentIndex == currentWordList.size - 1) View.GONE else View.VISIBLE
+        } else {
+            binding.leftSwipeIndicator.visibility =
+                if (currentIndex == 0) View.GONE else View.VISIBLE
+            binding.rightSwipeIndicator.visibility =
+                if (currentIndex == currentList.size - 1) View.GONE else View.VISIBLE
+        }
+    }
+
     private fun updateDisplay() {
         if (currentCategory == "words") {
             val wordPair = currentWordList[currentIndex]
@@ -198,6 +214,7 @@ class SignActivity : AppCompatActivity() {
             playVideo(frontViewVideoUrl, "front")
             trackProgress(displayText)
         }
+        updateSwipeIndicators()
     }
 
     private fun trackProgress(displayText: String) {
