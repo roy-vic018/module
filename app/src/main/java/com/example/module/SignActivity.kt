@@ -34,6 +34,8 @@ class SignActivity : AppCompatActivity() {
     private var currentVideoCode: String = ""
     private lateinit var gestureDetector: GestureDetector
     private var player: ExoPlayer? = null
+    private var showRightIndicator = true
+
 
     @OptIn(UnstableApi::class)
     @SuppressLint("ClickableViewAccessibility")
@@ -176,9 +178,9 @@ class SignActivity : AppCompatActivity() {
         }
     }
 
-    // Update the swipe indicators based on the current item
+    // Update the swipe indicators based on the current item, then fade out after 2 seconds.
     private fun updateSwipeIndicators() {
-        // Check for "words" or other categories
+        // Retain your original logic:
         if (currentCategory == "words") {
             binding.leftSwipeIndicator.visibility =
                 if (currentIndex == 0) View.GONE else View.VISIBLE
@@ -189,6 +191,27 @@ class SignActivity : AppCompatActivity() {
                 if (currentIndex == 0) View.GONE else View.VISIBLE
             binding.rightSwipeIndicator.visibility =
                 if (currentIndex == currentList.size - 1) View.GONE else View.VISIBLE
+        }
+
+        // For any visible indicator, schedule a fade-out after 2 seconds.
+        if (binding.leftSwipeIndicator.visibility == View.VISIBLE) {
+            // Reset alpha (in case it was faded previously)
+            binding.leftSwipeIndicator.alpha = 1f
+            binding.leftSwipeIndicator.postDelayed({
+                binding.leftSwipeIndicator.animate()
+                    .alpha(0f)
+                    .setDuration(500)
+                    .withEndAction { binding.leftSwipeIndicator.visibility = View.INVISIBLE }
+            }, 2000)
+        }
+        if (binding.rightSwipeIndicator.visibility == View.VISIBLE) {
+            binding.rightSwipeIndicator.alpha = 1f
+            binding.rightSwipeIndicator.postDelayed({
+                binding.rightSwipeIndicator.animate()
+                    .alpha(0f)
+                    .setDuration(500)
+                    .withEndAction { binding.rightSwipeIndicator.visibility = View.INVISIBLE }
+            }, 2000)
         }
     }
 
@@ -273,6 +296,7 @@ class SignActivity : AppCompatActivity() {
         player?.prepare()
         player?.playWhenReady = true
         player?.setPlaybackSpeed(1.2f)
+        player?.volume = 0f
     }
 
     /**

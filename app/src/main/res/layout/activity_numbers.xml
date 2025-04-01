@@ -254,21 +254,21 @@
 
                 <ImageView
                     android:id="@+id/imgQuizIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="80dp"
+                    android:layout_height="55dp"
                     android:src="@raw/animated_locked" />
 
                 <TextView
                     android:id="@+id/txtQuizLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="0dp"
                     android:fontFamily="@font/black_ops_one"
                     android:text="TAKE NUMBERS QUIZ"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    app:cardBackgroundColor="@color/material_dynamic_primary20"/>
+                    android:textSize="18sp"
+                    app:cardBackgroundColor="@color/material_dynamic_primary20" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
