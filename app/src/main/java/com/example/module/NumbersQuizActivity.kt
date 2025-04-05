@@ -273,13 +273,20 @@ class NumbersQuizActivity : AppCompatActivity() {
         binding.konfettiView.start(party)
     }
 
-
+    @SuppressLint("UseKtx")
     private fun saveProgress() {
         with(sharedPref.edit()) {
             putInt("bestScore", maxOf(currentProgress.correctAnswers, sharedPref.getInt("bestScore", 0)))
             putInt("bestStreak", maxOf(currentProgress.bestStreak, sharedPref.getInt("bestStreak", 0)))
             apply()
         }
+
+        // Calculate the percentage score and save to global "MyScores" preference.
+        val scorePercentage = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions * 100).toInt()
+        getSharedPreferences("MyScores", MODE_PRIVATE)
+            .edit()
+            .putInt("numbers_score",  currentProgress.correctAnswers)
+            .apply()
     }
 
     private fun loadProgress() {

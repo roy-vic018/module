@@ -284,12 +284,20 @@ class WordsQuizActivity : AppCompatActivity() {
         binding.konfettiView.start(party)
     }
 
+    @SuppressLint("UseKtx")
     private fun saveProgress() {
         with(sharedPref.edit()) {
             putInt("bestScore", maxOf(currentProgress.correctAnswers, sharedPref.getInt("bestScore", 0)))
             putInt("bestStreak", maxOf(currentProgress.bestStreak, sharedPref.getInt("bestStreak", 0)))
             apply()
         }
+
+        // Calculate and save the percentage score globally.
+        val scorePercentage = (currentProgress.correctAnswers.toFloat() / currentProgress.totalQuestions * 100).toInt()
+        getSharedPreferences("MyScores", MODE_PRIVATE)
+            .edit()
+            .putInt("words_score",  currentProgress.correctAnswers)
+            .apply()
     }
 
     private fun loadProgress() {

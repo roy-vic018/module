@@ -64,6 +64,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val prefs = getSharedPreferences("MyScores", MODE_PRIVATE)
+        val numbersScore = prefs.getInt("numbers_score", 0)
+        val lettersScore = prefs.getInt("letters_score", 0)
+        val wordsScore = prefs.getInt("words_score", 0)
+
+        findViewById<TextView>(R.id.tvScoreNumbers).text = "Numbers Score: $numbersScore"
+        findViewById<TextView>(R.id.tvScoreLetters).text = "Letters Score: $lettersScore"
+        findViewById<TextView>(R.id.tvScoreWords).text = "Words Score: $wordsScore"
+
         updateProgress()
     }
 
@@ -89,14 +98,14 @@ class MainActivity : AppCompatActivity() {
         completed: Int,
         total: Int
     ) {
-        val progress = (completed.toFloat() / total * 100).toInt()
-        progressBar.progress = progress
-        textView.text = "$progress%"
+        val percent = (completed.toFloat() / total * 100).toInt().coerceAtMost(100)
+        progressBar.progress = percent
+        textView.text = "$percent%"
 
-        // Change color when completed
-        if (progress == 100) {
+        if (percent == 100) {
             progressBar.setIndicatorColor(ContextCompat.getColor(this, R.color.green_500))
             textView.setTextColor(ContextCompat.getColor(this, R.color.green_500))
         }
     }
+
 }

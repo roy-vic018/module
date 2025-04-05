@@ -58,6 +58,8 @@ class QuizActivity : AppCompatActivity() {
 
     // Flag to ensure only one answer is processed per question.
     private var questionAnswered = false
+    // Flag to prevent quiz start until instructions are accepted.
+    private var instructionsAccepted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +77,39 @@ class QuizActivity : AppCompatActivity() {
         setupDropZone()
         setupClickListeners()
         showNextQuestion()
+
+        // Instead of starting the quiz immediately, show instructions first.
+        showQuizInstruction()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         questionTimer?.cancel()
         player?.release()
+    }
+
+    /**
+     * Displays the quiz instructions as a non-cancelable dialog.
+     * The quiz will not begin until the user taps "OK".
+     */
+    private fun showQuizInstruction() {
+        AlertDialog.Builder(this)
+            .setTitle("Quiz Instructions")
+            .setMessage(
+                "Welcome to the Drag & Drop Quiz!\n\n" +
+                        "Instructions:\n" +
+                        "1. Drag the option you think is correct into the drop zone.\n" +
+                        "2. Once dropped, your answer will be evaluated.\n" +
+                        "3. You cannot proceed until you have read these instructions.\n\n" +
+                        "Press OK to start the quiz."
+            )
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, _ ->
+                instructionsAccepted = true
+                dialog.dismiss()
+                showNextQuestion()  // Start quiz after instructions are accepted.
+            }
+            .show()
     }
 
     /**
@@ -170,6 +199,9 @@ class QuizActivity : AppCompatActivity() {
 
     @SuppressLint("NewApi")
     private fun showNextQuestion() {
+        // If instructions have not been accepted, do not start a question.
+        if (!instructionsAccepted) return
+
         questionTimer?.cancel()
         questionAnswered = false
         if (questions.isEmpty()) {
